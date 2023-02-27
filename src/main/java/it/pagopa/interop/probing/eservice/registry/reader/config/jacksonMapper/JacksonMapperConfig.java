@@ -26,24 +26,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
  * The Class JacksonMapperConfig.
  */
 public class JacksonMapperConfig {
-	
-
-	/** The instance. */
-	private static JacksonMapperConfig instance;
-
-
-	/**
-	 * Gets the single instance of JacksonMapperConfig.
-	 *
-	 * @return single instance of JacksonMapperConfig
-	 */
-	public static JacksonMapperConfig getInstance() {
-		if (instance == null) {
-			instance = new JacksonMapperConfig();
-		}
-		return instance;
-	}
-	
+		
 	/**
 	 * Gets the object mapper.
 	 *

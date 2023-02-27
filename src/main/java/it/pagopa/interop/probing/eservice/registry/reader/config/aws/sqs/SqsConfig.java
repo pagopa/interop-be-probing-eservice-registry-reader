@@ -2,7 +2,7 @@
 *
 * Copyright 2023 (C) DXC
 *
-* Created on  : Feb 24, 2023
+* Created on  : Feb 27, 2023
 * Author      : dxc technology
 * Project Name: interop-be-probing-eservice-registry-reader 
 * Package     : it.pagopa.interop.probing.eservice.registry.reader.config.aws.sqs
@@ -27,8 +27,8 @@ import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.sqs.AmazonSQSAsync;
 import com.amazonaws.services.sqs.AmazonSQSAsyncClientBuilder;
 
-import io.awspring.cloud.messaging.core.QueueMessagingTemplate;
 import it.pagopa.interop.probing.eservice.registry.reader.config.PropertiesLoader;
+import it.pagopa.interop.probing.eservice.registry.reader.util.ProjectConstants;
 
 /**
  * The Class SqsConfig.
@@ -50,21 +50,23 @@ public class SqsConfig {
 	/** The profile. */
 	private String profile;
 
-	/** The instance. */
-	private static SqsConfig instance;
+	
+	/** The Constant ACCESS_KEY. */
+	private static final String ACCESS_KEY = "amazon.sqs.credentials.accessKey";
+	
+	/** The Constant SECRET_KEY. */
+	private static final String SECRET_KEY = "amazon.sqs.credentials.accessKey";
 
-	/**
-	 * Gets the single instance of SqsConfig.
-	 *
-	 * @return single instance of SqsConfig
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	public static SqsConfig getInstance() throws IOException {
-		if (instance == null) {
-			instance = new SqsConfig();
-		}
-		return instance;
-	}
+	/** The Constant REGION. */
+	private static final String REGION = "amazon.sqs.region.static";
+	
+	/** The Constant URL. */
+	private static final String URL = "amazon.sqs.end-point.services-queue";
+	
+	/** The Constant PROFILE. */
+	private static final String PROFILE = "amazon.sqs.end-point.services-queue";
+	
+
 
 	/**
 	 * Instantiates a new sqs config.
@@ -72,12 +74,12 @@ public class SqsConfig {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public SqsConfig() throws IOException {
-		Properties configuration = PropertiesLoader.loadProperties("application.properties");
-		String accessKey = configuration.getProperty("amazon.sqs.credentials.accessKey");
-		String secretKey = configuration.getProperty("amazon.sqs.credentials.secretKey");
-		String amazonAWSRegion = configuration.getProperty("amazon.sqs.region.static");
-		String sqsUrlServices = configuration.getProperty("amazon.sqs.end-point.services-queue");
-		String profile = configuration.getProperty("profile.active");
+		Properties configuration = PropertiesLoader.loadProperties(ProjectConstants.PROPERTIES);
+		String accessKey = configuration.getProperty(ACCESS_KEY);
+		String secretKey = configuration.getProperty(SECRET_KEY);
+		String amazonAWSRegion = configuration.getProperty(REGION);
+		String sqsUrlServices = configuration.getProperty(URL);
+		String profile = configuration.getProperty(PROFILE);
 		this.accessKey = accessKey;
 		this.secretKey = secretKey;
 		this.region = amazonAWSRegion;
@@ -101,13 +103,5 @@ public class SqsConfig {
 		return client;
 	}
 
-	/**
-	 * Queue messaging template.
-	 *
-	 * @return the queue messaging template
-	 */
-	public QueueMessagingTemplate queueMessagingTemplate() {
-		return new QueueMessagingTemplate(amazonSQSAsync());
-	}
 
 }

@@ -2,7 +2,7 @@
 *
 * Copyright 2023 (C) DXC
 *
-* Created on  : Feb 24, 2023
+* Created on  : Feb 27, 2023
 * Author      : dxc technology
 * Project Name: interop-be-probing-eservice-registry-reader 
 * Package     : it.pagopa.interop.probing.eservice.registry.reader.config.aws.s3
@@ -28,6 +28,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 
 import it.pagopa.interop.probing.eservice.registry.reader.config.PropertiesLoader;
+import it.pagopa.interop.probing.eservice.registry.reader.util.ProjectConstants;
 
 /**
  * The Class BucketConfig.
@@ -43,22 +44,9 @@ public class BucketConfig {
 	/** The amazon AWS region. */
 	private String amazonAWSRegion;
 
-	/** The instance. */
-	private static BucketConfig instance;
 
-
-	/**
-	 * Gets the single instance of BucketConfig.
-	 *
-	 * @return single instance of BucketConfig
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	public static BucketConfig getInstance() throws IOException {
-		if (instance == null) {
-			instance = new BucketConfig();
-		}
-		return instance;
-	}
+	/** The Constant REGION. */
+	private static final String REGION = "amazon.clientS3.region";
 	
 	
 	/**
@@ -67,10 +55,10 @@ public class BucketConfig {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public BucketConfig() throws IOException {
-		Properties configuration = PropertiesLoader.loadProperties("application.properties");
-		String bucketName = configuration.getProperty("amazon.bucketS3.name");
-		String bucketKey = configuration.getProperty("amazon.bucketS3.key");
-		String amazonAWSRegion = configuration.getProperty("amazon.clientS3.region");
+		Properties configuration = PropertiesLoader.loadProperties(ProjectConstants.PROPERTIES);
+		String bucketName = configuration.getProperty(ProjectConstants.BUCKET_NAME);
+		String bucketKey = configuration.getProperty(ProjectConstants.BUCKET_KEY);
+		String amazonAWSRegion = configuration.getProperty(REGION);
 		this.amazonAWSAccessKey = bucketName;
 		this.amazonAWSSecretKey = bucketKey;
 		this.amazonAWSRegion = amazonAWSRegion;
@@ -92,7 +80,6 @@ public class BucketConfig {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public AmazonS3 amazonS3() throws IOException {
-
 		return AmazonS3ClientBuilder
 				.standard()
 				.withCredentials(new AWSStaticCredentialsProvider(credentials()))
