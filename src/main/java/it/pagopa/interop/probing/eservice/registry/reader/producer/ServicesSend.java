@@ -21,10 +21,6 @@ package it.pagopa.interop.probing.eservice.registry.reader.producer;
 import java.io.IOException;
 import java.util.Properties;
 
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.amazonaws.services.sqs.model.SendMessageRequest;
 
 import it.pagopa.interop.probing.eservice.registry.reader.config.PropertiesLoader;
@@ -32,16 +28,14 @@ import it.pagopa.interop.probing.eservice.registry.reader.config.aws.sqs.SqsConf
 import it.pagopa.interop.probing.eservice.registry.reader.config.jacksonMapper.JacksonMapperConfig;
 import it.pagopa.interop.probing.eservice.registry.reader.dto.EserviceDTO;
 import jakarta.inject.Inject;
+import lombok.extern.slf4j.Slf4j;
 
 
 /**
  * The Class ServicesSend.
  */
+@Slf4j
 public class ServicesSend {
-	
-	/** The Constant LOGGER. */
-	private static final Logger LOGGER = LoggerFactory.getLogger(ServicesSend.class);
-
 	
     /** The sqs url services. */
     private String sqsUrlServices;
@@ -76,6 +70,6 @@ public class ServicesSend {
             sendMessageRequest = new SendMessageRequest().withQueueUrl(sqsUrlServices)
                     .withMessageBody(jacksonMapperConfig.getObjectMapper().writeValueAsString(service));
             sqsConfig.amazonSQSAsync().sendMessage(sendMessageRequest);
-           LOGGER.info("Service has been published in SQS.");
+           log.info("Service has been published in SQS.");
 	}
 }
