@@ -27,7 +27,11 @@ import java.util.Properties;
  */
 public class PropertiesLoader {
 
-    /**
+    private PropertiesLoader() {
+		super();
+	}
+
+	/**
      * Load properties.
      *
      * @param resourceFileName the resource file name

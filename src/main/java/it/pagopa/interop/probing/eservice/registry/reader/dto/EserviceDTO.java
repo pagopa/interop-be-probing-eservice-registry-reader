@@ -25,7 +25,6 @@ import javax.validation.constraints.Pattern;
 import it.pagopa.interop.probing.eservice.registry.reader.annotations.ValidateEnum;
 import it.pagopa.interop.probing.eservice.registry.reader.util.EServiceState;
 import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceType;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -48,7 +47,6 @@ import lombok.Setter;
  * Instantiates a new eservice DTO.
  */
 @NoArgsConstructor
-@AllArgsConstructor
 public class EserviceDTO {
 
 		/** The name. */

@@ -18,6 +18,7 @@
 ***************************************************************************/
 package it.pagopa.interop.probing.eservice.registry.reader.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import it.pagopa.interop.probing.eservice.registry.reader.dto.EserviceDTO;
@@ -33,5 +34,5 @@ public interface  BucketService {
 	 * @return the list
 	 * @throws Exception the exception
 	 */
-	List<EserviceDTO> readObject() throws Exception;
+	List<EserviceDTO> readObject() throws IOException;
 }

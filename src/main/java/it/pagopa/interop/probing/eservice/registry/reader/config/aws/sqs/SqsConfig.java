@@ -58,13 +58,13 @@ public class SqsConfig {
 	private static final String SECRET_KEY = "amazon.sqs.credentials.accessKey";
 
 	/** The Constant REGION. */
-	private static final String REGION = "amazon.sqs.region.static";
+	private static final String REGION_KEY = "amazon.sqs.region.static";
 	
 	/** The Constant URL. */
-	private static final String URL = "amazon.sqs.end-point.services-queue";
+	private static final String URL_KEY = "amazon.sqs.end-point.services-queue";
 	
 	/** The Constant PROFILE. */
-	private static final String PROFILE = "amazon.sqs.end-point.services-queue";
+	private static final String PROFILE_KEY = "profile.active";
 	
 
 
@@ -75,16 +75,11 @@ public class SqsConfig {
 	 */
 	public SqsConfig() throws IOException {
 		Properties configuration = PropertiesLoader.loadProperties(ProjectConstants.PROPERTIES);
-		String accessKey = configuration.getProperty(ACCESS_KEY);
-		String secretKey = configuration.getProperty(SECRET_KEY);
-		String amazonAWSRegion = configuration.getProperty(REGION);
-		String sqsUrlServices = configuration.getProperty(URL);
-		String profile = configuration.getProperty(PROFILE);
-		this.accessKey = accessKey;
-		this.secretKey = secretKey;
-		this.region = amazonAWSRegion;
-		this.sqsUrlServices = sqsUrlServices;
-		this.profile = profile;
+		this.accessKey = configuration.getProperty(ACCESS_KEY);
+		this.secretKey = configuration.getProperty(SECRET_KEY);
+		this.region = configuration.getProperty(REGION_KEY);
+		this.sqsUrlServices = configuration.getProperty(URL_KEY);
+		this.profile = configuration.getProperty(PROFILE_KEY);
 	}
 
 	/**
@@ -93,14 +88,13 @@ public class SqsConfig {
 	 * @return the amazon SQS async
 	 */
 	public AmazonSQSAsync amazonSQSAsync() {
-		AmazonSQSAsync client = profile.equals("prod") ? AmazonSQSAsyncClientBuilder.standard()
+		return profile.equals("prod") ? AmazonSQSAsyncClientBuilder.standard()
 				.withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(sqsUrlServices, region)).build()
 				: AmazonSQSAsyncClientBuilder.standard()
 						.withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(sqsUrlServices, region))
 						.withCredentials(
 								new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey)))
 						.build();
-		return client;
 	}
 
 

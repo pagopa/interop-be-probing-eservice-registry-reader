@@ -16,7 +16,7 @@
 ** --/1.0  |  Initial Create.
 **---------|------------------------------------------------------------------
 ***************************************************************************/
-package it.pagopa.interop.probing.eservice.registry.reader.config.jacksonMapper;
+package it.pagopa.interop.probing.eservice.registry.reader.config.jacksonmapper;
 
 import java.io.IOException;
 import java.util.Set;

@@ -36,13 +36,13 @@ import it.pagopa.interop.probing.eservice.registry.reader.util.ProjectConstants;
 public class BucketConfig {
 
 	/** The amazon AWS access key. */
-	private String amazonAWSAccessKey;
+	private String amazonAwsAccessKey;
 
 	/** The amazon AWS secret key. */
-	private String amazonAWSSecretKey;
+	private String amazonAwsSecretKey;
 	
 	/** The amazon AWS region. */
-	private String amazonAWSRegion;
+	private String amazonAwsRegion;
 
 
 	/** The Constant REGION. */
@@ -56,12 +56,9 @@ public class BucketConfig {
 	 */
 	public BucketConfig() throws IOException {
 		Properties configuration = PropertiesLoader.loadProperties(ProjectConstants.PROPERTIES);
-		String bucketName = configuration.getProperty(ProjectConstants.BUCKET_NAME);
-		String bucketKey = configuration.getProperty(ProjectConstants.BUCKET_KEY);
-		String amazonAWSRegion = configuration.getProperty(REGION);
-		this.amazonAWSAccessKey = bucketName;
-		this.amazonAWSSecretKey = bucketKey;
-		this.amazonAWSRegion = amazonAWSRegion;
+		this.amazonAwsAccessKey = configuration.getProperty(ProjectConstants.BUCKET_NAME);
+		this.amazonAwsSecretKey = configuration.getProperty(ProjectConstants.BUCKET_KEY);
+		this.amazonAwsRegion  = configuration.getProperty(REGION);
 	}
 	
 	/**
@@ -70,7 +67,7 @@ public class BucketConfig {
 	 * @return the AWS credentials
 	 */
 	public AWSCredentials credentials() {
-		return new BasicAWSCredentials(amazonAWSAccessKey,amazonAWSSecretKey);
+		return new BasicAWSCredentials(amazonAwsAccessKey,amazonAwsSecretKey);
 	}
 
 	/**
@@ -83,7 +80,7 @@ public class BucketConfig {
 		return AmazonS3ClientBuilder
 				.standard()
 				.withCredentials(new AWSStaticCredentialsProvider(credentials()))
-				.withRegion(amazonAWSRegion)
+				.withRegion(amazonAwsRegion)
 				.build();
 	}
 

@@ -23,6 +23,10 @@ package it.pagopa.interop.probing.eservice.registry.reader.util;
  */
 public class ProjectConstants {
 	
+	private ProjectConstants() {
+		super();
+	}
+
 	/** The Constant PROPERTIES. */
 	public static final String PROPERTIES = "application.properties";
 	

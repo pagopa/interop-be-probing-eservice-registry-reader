@@ -41,12 +41,12 @@ public class EnumValidator implements ConstraintValidator<ValidateEnum, String>{
      */
     @Override
     public void initialize(ValidateEnum constraintAnnotation) {
-        valueList = new ArrayList<String>();
+        valueList = new ArrayList<>();
         Class<? extends Enum<?>> enumClass = constraintAnnotation.enumClass();
 
         @SuppressWarnings("rawtypes")
         Enum[] enumValArr = enumClass.getEnumConstants();
-        for (@SuppressWarnings("rawtypes") Enum enumVal : enumValArr) {
+        for (Enum<?> enumVal : enumValArr) {
             valueList.add(enumVal.toString().toUpperCase());
         }
     }
