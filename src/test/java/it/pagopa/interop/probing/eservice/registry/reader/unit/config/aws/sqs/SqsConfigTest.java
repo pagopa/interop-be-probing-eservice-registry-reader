@@ -6,17 +6,15 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import com.amazonaws.SdkClientException;
 import com.amazonaws.services.sqs.AmazonSQSAsync;
 
 import it.pagopa.interop.probing.eservice.registry.reader.config.aws.sqs.SqsConfig;
 
-@RunWith(MockitoJUnitRunner.class)
  class SqsConfigTest {
 	
 	@InjectMocks
@@ -28,12 +26,14 @@ import it.pagopa.interop.probing.eservice.registry.reader.config.aws.sqs.SqsConf
 	}
 	
 	@Test
-	 void testAmazonSQSAsync_IsNotNull() {
+	@DisplayName("Test AmazonSQS client build")
+	 void testAmazonSQSAsync_thenReturnAmazonSQSAsyncIsNotNull() {
 		assertNotNull(sqsConfig.amazonSQSAsync());
 	}
 	
 	@Test
-	void testAmazonSQSAsync_SdkClientException(){
+	@DisplayName("Test AmazonSQS client connection to non-existent queue")
+	void testAmazonSQSAsync_NotValidSqsUrl_thenThrowSdkClientException(){
 		AmazonSQSAsync client = sqsConfig.amazonSQSAsync();
 		String url = "http://queue/test-queue";
 		Assertions.assertThrows(SdkClientException.class, () -> client.getQueueUrl(url));

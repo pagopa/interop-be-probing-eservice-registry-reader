@@ -66,6 +66,9 @@ public class SqsConfig {
 	/** The Constant PROFILE. */
 	private static final String PROFILE_KEY = "profile.active";
 	
+	/** The Constant PROD. */
+	private static final String PROD_KEY = "prod";
+	
 
 
 	/**
@@ -88,7 +91,7 @@ public class SqsConfig {
 	 * @return the amazon SQS async
 	 */
 	public AmazonSQSAsync amazonSQSAsync() {
-		return profile.equals("prod") ? AmazonSQSAsyncClientBuilder.standard()
+		return profile.equals(PROD_KEY) ? AmazonSQSAsyncClientBuilder.standard()
 				.withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(sqsUrlServices, region)).build()
 				: AmazonSQSAsyncClientBuilder.standard()
 						.withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(sqsUrlServices, region))

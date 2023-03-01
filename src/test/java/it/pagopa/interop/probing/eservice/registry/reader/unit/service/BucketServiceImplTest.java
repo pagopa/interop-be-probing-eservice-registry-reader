@@ -46,11 +46,11 @@ class BucketServiceImplTest {
 	@Mock 
 	private AmazonS3 s3Client;
 	
-	private List<EserviceDTO> listProva;
+	private List<EserviceDTO> listEservices;
 	
 	@BeforeEach
 	void setup() {
-		listProva = new ArrayList<>();
+		listEservices = new ArrayList<>();
 		EserviceDTO eServiceDTO = new EserviceDTO();
 		eServiceDTO.setEserviceId(UUID.randomUUID().toString());
 		eServiceDTO.setVersionId(UUID.randomUUID().toString());
@@ -60,13 +60,13 @@ class BucketServiceImplTest {
 		eServiceDTO.setType("REST");
 		String[] basePath = { "xxx.xxx/xxx", "yyy.yyy/xxx" };
 		eServiceDTO.setBasePath(basePath);
-		listProva.add(eServiceDTO);
+		listEservices.add(eServiceDTO);
 	}
 
 	@Test
 	@DisplayName("readObject method is executed")
 	void testReadObject_whenGivenValidS3Object_thenReturnValidObjectList() throws Exception {
-		String stringList = mapper.writeValueAsString(listProva);
+		String stringList = mapper.writeValueAsString(listEservices);
 		S3Object s3Object = new S3Object();
 		s3Object.setBucketName("bucket-name-test");
 		s3Object.setKey("bucket-key-test");
@@ -78,23 +78,23 @@ class BucketServiceImplTest {
 		Mockito.when(s3Client.getObject(any(GetObjectRequest.class))).thenReturn(s3Object);
 				
 		List<EserviceDTO> resp = bucketServiceImpl.readObject();
-		assertEquals(listProva.size(), resp.size());
+		assertEquals(listEservices.size(), resp.size());
 		assertEquals(stringList, jacksonMapperConfig.getObjectMapper().writeValueAsString(resp));
 	}
 
 	@Test
 	@DisplayName("Validate Jackson read object")
-	void testValidateJacksonReadObject() throws Exception {
+	void testValidateJacksonReadObject_whenValidObject_thenReturnValidObjectList() throws Exception {
 		Mockito.when(jacksonMapperConfig.getObjectMapper()).thenReturn(mapper);
 		jacksonMapperConfig.getObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		SimpleModule validationModule = new SimpleModule();
 		validationModule.setDeserializerModifier(new BeanDeserializerModifierWithValidation());
 		jacksonMapperConfig.getObjectMapper().registerModule(validationModule);
 
-		String stringDto = jacksonMapperConfig.getObjectMapper().writeValueAsString(listProva.get(0));
+		String stringDto = jacksonMapperConfig.getObjectMapper().writeValueAsString(listEservices.get(0));
 
 		EserviceDTO resultMap = jacksonMapperConfig.getObjectMapper().readValue(stringDto, EserviceDTO.class);
-		assertEquals(listProva.get(0).getEserviceId(), resultMap.getEserviceId());
+		assertEquals(listEservices.get(0).getEserviceId(), resultMap.getEserviceId());
 	}
 
 }
