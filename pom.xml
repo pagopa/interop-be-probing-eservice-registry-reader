@@ -101,10 +101,5 @@
 			<artifactId>weld-se-core</artifactId>
 			<version>4.0.3.Final</version>
 		</dependency>
-		<dependency>
-			<groupId>org.jboss.weld</groupId>
-			<artifactId>weld-junit5</artifactId>
-			<version>4.0.0.Final</version>
-		</dependency>
 	</dependencies>
 </project>
