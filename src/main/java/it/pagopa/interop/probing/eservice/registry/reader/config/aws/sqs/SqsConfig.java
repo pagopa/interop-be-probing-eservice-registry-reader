@@ -47,8 +47,8 @@ public class SqsConfig {
 	/** The sqs url services. */
 	private String sqsUrlServices;
 
-	/** The profile. */
-	private String profile;
+	/** The environment. */
+	private String environment;
 
 	
 	/** The Constant ACCESS_KEY. */
@@ -64,7 +64,7 @@ public class SqsConfig {
 	private static final String URL_KEY = "amazon.sqs.end-point.services-queue";
 	
 	/** The Constant PROFILE. */
-	private static final String PROFILE_KEY = "profile.active";
+	private static final String ENV_KEY = "environment";
 	
 	/** The Constant PROD. */
 	private static final String PROD_KEY = "prod";
@@ -96,7 +96,7 @@ public class SqsConfig {
 		this.secretKey = configuration.getProperty(SECRET_KEY);
 		this.region = configuration.getProperty(REGION_KEY);
 		this.sqsUrlServices = configuration.getProperty(URL_KEY);
-		this.profile = configuration.getProperty(PROFILE_KEY);
+		this.environment = configuration.getProperty(ENV_KEY);
 	}
 
 	/**
@@ -105,7 +105,7 @@ public class SqsConfig {
 	 * @return the amazon SQS async
 	 */
 	public AmazonSQSAsync amazonSQSAsync() {
-		return profile.equals(PROD_KEY) ? AmazonSQSAsyncClientBuilder.standard()
+		return environment.equals(PROD_KEY) ? AmazonSQSAsyncClientBuilder.standard()
 				.withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(sqsUrlServices, region)).build()
 				: AmazonSQSAsyncClientBuilder.standard()
 						.withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(sqsUrlServices, region))

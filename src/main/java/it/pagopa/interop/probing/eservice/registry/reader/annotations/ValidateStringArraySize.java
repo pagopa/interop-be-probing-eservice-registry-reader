@@ -2,11 +2,11 @@
 *
 * Copyright 2023 (C) DXC
 *
-* Created on  : Feb 24, 2023
+* Created on  : Mar 2, 2023
 * Author      : dxc technology
 * Project Name: interop-be-probing-eservice-registry-reader 
 * Package     : it.pagopa.interop.probing.eservice.registry.reader.annotations
-* File Name   : ValidateEnum.java
+* File Name   : ValidateStringArray.java
 *
 *-----------------------------------------------------------------------------
 * Revision History (Release )
@@ -26,30 +26,31 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import it.pagopa.interop.probing.eservice.registry.reader.annotations.validator.EnumValidator;
+import it.pagopa.interop.probing.eservice.registry.reader.annotations.validator.StringArrayValidator;
 
 
 /**
- * The Interface ValidateEnum.
+ * The Interface ValidateStringArray.
  */
-@Target({ ElementType.FIELD, ElementType.PARAMETER })
+@Target({ ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = EnumValidator.class)
-public @interface ValidateEnum {
-
-	 /**
- 	 * Enum class.
- 	 *
- 	 * @return the class<? extends enum<?>>
- 	 */
- 	Class<? extends Enum<?>> enumClass();
-
+@Constraint(validatedBy = StringArrayValidator.class)
+public @interface ValidateStringArraySize {
+	
+	
+	/**
+	 * Max size.
+	 *
+	 * @return the int
+	 */
+	int maxSize();
+	
     /**
      * Message.
      *
      * @return the string
      */
-    String message() default "value must be present in the enum {enumClass}";
+    String message() default "One of the strings of the array is more than {maxSize} characters long";
 
     /**
      * Groups.

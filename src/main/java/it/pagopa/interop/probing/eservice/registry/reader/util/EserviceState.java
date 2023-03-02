@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 /**
  * The Enum EServiceState.
  */
-public enum EServiceState {
+public enum EserviceState {
 
 	/** The active. */
 	ACTIVE("ACTIVE"),
@@ -40,7 +40,7 @@ public enum EServiceState {
 	 *
 	 * @param value the value
 	 */
-	EServiceState(String value) {
+	EserviceState(String value) {
 		this.value = value;
 	}
 
@@ -71,8 +71,8 @@ public enum EServiceState {
 	 * @return the e service state
 	 */
 	@JsonCreator
-	public static EServiceState fromValue(String value) {
-		for (EServiceState b : EServiceState.values()) {
+	public static EserviceState fromValue(String value) {
+		for (EserviceState b : EserviceState.values()) {
 			if (b.value.equals(value)) {
 				return b;
 			}
