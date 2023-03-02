@@ -18,8 +18,6 @@
 ***************************************************************************/
 package it.pagopa.interop.probing.eservice.registry.reader.config.jacksonmapper;
 
-import java.io.IOException;
-
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -36,9 +34,8 @@ public class JacksonMapperConfig {
 	 * Gets the single instance of JacksonMapperConfig.
 	 *
 	 * @return single instance of JacksonMapperConfig
-	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static JacksonMapperConfig getInstance() throws IOException {
+	public static JacksonMapperConfig getInstance() {
 		if (instance == null) {
 			instance = new JacksonMapperConfig();
 		}

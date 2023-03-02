@@ -45,9 +45,8 @@ public class BucketService{
 	 * Gets the single instance of BucketService.
 	 *
 	 * @return single instance of BucketService
-	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static BucketService getInstance() throws IOException {
+	public static BucketService getInstance() {
 		if (instance == null) {
 			instance = new BucketService();
 		}
