@@ -2,7 +2,7 @@
 *
 * Copyright 2023 (C) DXC
 *
-* Created on  : Feb 27, 2023
+* Created on  : Mar 2, 2023
 * Author      : dxc technology
 * Project Name: interop-be-probing-eservice-registry-reader 
 * Package     : it.pagopa.interop.probing.eservice.registry.reader.producer
@@ -27,26 +27,35 @@ import it.pagopa.interop.probing.eservice.registry.reader.config.PropertiesLoade
 import it.pagopa.interop.probing.eservice.registry.reader.config.aws.sqs.SqsConfig;
 import it.pagopa.interop.probing.eservice.registry.reader.config.jacksonmapper.JacksonMapperConfig;
 import it.pagopa.interop.probing.eservice.registry.reader.dto.EserviceDTO;
-import jakarta.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 
 
 /**
  * The Class ServicesSend.
  */
+
+/** The Constant log. */
 @Slf4j
 public class ServicesSend {
 	
     /** The sqs url services. */
     private String sqsUrlServices;
     
-	/** The jackson mapper config. */
-	@Inject
-	JacksonMapperConfig  jacksonMapperConfig;
-	
-	/** The sqs config. */
-	@Inject
-	SqsConfig  sqsConfig;
+	/** The instance. */
+	private static ServicesSend instance;
+
+	/**
+	 * Gets the single instance of ServicesSend.
+	 *
+	 * @return single instance of ServicesSend
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public static ServicesSend getInstance() throws IOException {
+		if (instance == null) {
+			instance = new ServicesSend();
+		}
+		return instance;
+	}
 
 	
 	/**
@@ -68,8 +77,8 @@ public class ServicesSend {
 	public void sendMessage(EserviceDTO service) throws IOException {
 		SendMessageRequest sendMessageRequest = null;
             sendMessageRequest = new SendMessageRequest().withQueueUrl(sqsUrlServices)
-                    .withMessageBody(jacksonMapperConfig.getObjectMapper().writeValueAsString(service));
-            sqsConfig.amazonSQSAsync().sendMessage(sendMessageRequest);
+                    .withMessageBody(JacksonMapperConfig.getInstance().getObjectMapper().writeValueAsString(service));
+            SqsConfig.getInstance().amazonSQSAsync().sendMessage(sendMessageRequest);
            log.info("Service has been published in SQS.");
 	}
 }

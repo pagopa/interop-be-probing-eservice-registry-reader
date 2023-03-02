@@ -2,7 +2,7 @@
 *
 * Copyright 2023 (C) DXC
 *
-* Created on  : Feb 27, 2023
+* Created on  : Mar 2, 2023
 * Author      : dxc technology
 * Project Name: interop-be-probing-eservice-registry-reader 
 * Package     : it.pagopa.interop.probing.eservice.registry.reader.service
@@ -17,22 +17,58 @@
 **---------|------------------------------------------------------------------
 ***************************************************************************/
 package it.pagopa.interop.probing.eservice.registry.reader.service;
-
 import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 
+import com.amazonaws.services.s3.model.GetObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
+import com.fasterxml.jackson.core.type.TypeReference;
+
+import it.pagopa.interop.probing.eservice.registry.reader.config.PropertiesLoader;
+import it.pagopa.interop.probing.eservice.registry.reader.config.aws.s3.BucketConfig;
+import it.pagopa.interop.probing.eservice.registry.reader.config.jacksonmapper.JacksonMapperConfig;
 import it.pagopa.interop.probing.eservice.registry.reader.dto.EserviceDTO;
+import it.pagopa.interop.probing.eservice.registry.reader.util.ProjectConstants;
+
 
 /**
- * The Interface BucketService.
+ * The Class BucketService.
  */
-public interface  BucketService {
+public class BucketService{
 	
+
+	/** The instance. */
+	private static BucketService instance;
+	
+	/**
+	 * Gets the single instance of BucketService.
+	 *
+	 * @return single instance of BucketService
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public static BucketService getInstance() throws IOException {
+		if (instance == null) {
+			instance = new BucketService();
+		}
+		return instance;
+	}
+
+
 	/**
 	 * Read object.
 	 *
 	 * @return the list
-	 * @throws Exception the exception
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	List<EserviceDTO> readObject() throws IOException;
+	public List<EserviceDTO> readObject() throws IOException {
+		Properties configuration = PropertiesLoader.loadProperties(ProjectConstants.PROPERTIES);
+		String bucketName = configuration.getProperty(ProjectConstants.BUCKET_NAME);
+		String bucketKey = configuration.getProperty(ProjectConstants.BUCKET_KEY);
+		S3Object s3Object = BucketConfig.getInstance().amazonS3().getObject(new GetObjectRequest(bucketName, bucketKey));
+		return JacksonMapperConfig.getInstance().getObjectMapper().readValue(s3Object.getObjectContent(), new TypeReference<List<EserviceDTO>>() {
+		});
+	}
+	
+
 }

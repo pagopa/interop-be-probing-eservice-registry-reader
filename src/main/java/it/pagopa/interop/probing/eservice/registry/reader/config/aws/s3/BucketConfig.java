@@ -2,7 +2,7 @@
 *
 * Copyright 2023 (C) DXC
 *
-* Created on  : Feb 27, 2023
+* Created on  : Mar 2, 2023
 * Author      : dxc technology
 * Project Name: interop-be-probing-eservice-registry-reader 
 * Package     : it.pagopa.interop.probing.eservice.registry.reader.config.aws.s3
@@ -48,6 +48,21 @@ public class BucketConfig {
 	/** The Constant REGION. */
 	private static final String REGION = "amazon.clientS3.region";
 	
+	/** The instance. */
+	private static BucketConfig instance;
+
+	/**
+	 * Gets the single instance of BucketConfig.
+	 *
+	 * @return single instance of BucketConfig
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public static BucketConfig getInstance() throws IOException {
+		if (instance == null) {
+			instance = new BucketConfig();
+		}
+		return instance;
+	}
 	
 	/**
 	 * Instantiates a new bucket config.

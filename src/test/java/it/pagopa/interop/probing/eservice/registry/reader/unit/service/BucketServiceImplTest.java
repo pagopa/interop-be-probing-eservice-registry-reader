@@ -30,13 +30,13 @@ import it.pagopa.interop.probing.eservice.registry.reader.config.jacksonmapper.B
 import it.pagopa.interop.probing.eservice.registry.reader.config.jacksonmapper.JacksonMapperConfig;
 import it.pagopa.interop.probing.eservice.registry.reader.dto.EserviceDTO;
 import it.pagopa.interop.probing.eservice.registry.reader.service.BucketService;
-import it.pagopa.interop.probing.eservice.registry.reader.service.BucketServiceImpl;
+import it.pagopa.interop.probing.eservice.registry.reader.service.BucketService;
 
 @ExtendWith(MockitoExtension.class)
 class BucketServiceImplTest {
 	
 	@InjectMocks 
-	private BucketService bucketServiceImpl = new BucketServiceImpl();
+	private BucketService bucketServiceImpl = new BucketService();
 	@Mock 
 	private JacksonMapperConfig jacksonMapperConfig;
 	@InjectMocks 

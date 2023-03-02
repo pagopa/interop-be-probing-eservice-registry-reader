@@ -2,10 +2,10 @@
 *
 * Copyright 2023 (C) DXC
 *
-* Created on  : Feb 24, 2023
+* Created on  : Mar 2, 2023
 * Author      : dxc technology
 * Project Name: interop-be-probing-eservice-registry-reader 
-* Package     : it.pagopa.interop.probing.eservice.registry.reader.config.jacksonMapper
+* Package     : it.pagopa.interop.probing.eservice.registry.reader.config.jacksonmapper
 * File Name   : JacksonMapperConfig.java
 *
 *-----------------------------------------------------------------------------
@@ -18,6 +18,8 @@
 ***************************************************************************/
 package it.pagopa.interop.probing.eservice.registry.reader.config.jacksonmapper;
 
+import java.io.IOException;
+
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -26,7 +28,24 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
  * The Class JacksonMapperConfig.
  */
 public class JacksonMapperConfig {
-		
+	
+	/** The instance. */
+	private static JacksonMapperConfig instance;
+
+	/**
+	 * Gets the single instance of JacksonMapperConfig.
+	 *
+	 * @return single instance of JacksonMapperConfig
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public static JacksonMapperConfig getInstance() throws IOException {
+		if (instance == null) {
+			instance = new JacksonMapperConfig();
+		}
+		return instance;
+	}
+
+	
 	/**
 	 * Gets the object mapper.
 	 *

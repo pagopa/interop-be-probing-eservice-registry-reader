@@ -2,7 +2,7 @@
 *
 * Copyright 2023 (C) DXC
 *
-* Created on  : Feb 27, 2023
+* Created on  : Mar 2, 2023
 * Author      : dxc technology
 * Project Name: interop-be-probing-eservice-registry-reader 
 * Package     : it.pagopa.interop.probing.eservice.registry.reader.config.aws.sqs
@@ -69,7 +69,21 @@ public class SqsConfig {
 	/** The Constant PROD. */
 	private static final String PROD_KEY = "prod";
 	
+	/** The instance. */
+	private static SqsConfig instance;
 
+	/**
+	 * Gets the single instance of SqsConfig.
+	 *
+	 * @return single instance of SqsConfig
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public static SqsConfig getInstance() throws IOException {
+		if (instance == null) {
+			instance = new SqsConfig();
+		}
+		return instance;
+	}
 
 	/**
 	 * Instantiates a new sqs config.
