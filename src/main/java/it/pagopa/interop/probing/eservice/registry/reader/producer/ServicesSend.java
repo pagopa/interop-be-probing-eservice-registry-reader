@@ -63,7 +63,7 @@ public class ServicesSend {
 	 *
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public ServicesSend() throws IOException {
+	private ServicesSend() throws IOException {
 		Properties configuration = PropertiesLoader.loadProperties("application.properties");
 		this.sqsUrlServices = configuration.getProperty("amazon.sqs.end-point.services-queue");
 	}

@@ -69,7 +69,7 @@ public class BucketConfig {
 	 *
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public BucketConfig() throws IOException {
+	private BucketConfig() throws IOException {
 		Properties configuration = PropertiesLoader.loadProperties(ProjectConstants.PROPERTIES);
 		this.amazonAwsAccessKey = configuration.getProperty(ProjectConstants.BUCKET_NAME);
 		this.amazonAwsSecretKey = configuration.getProperty(ProjectConstants.BUCKET_KEY);

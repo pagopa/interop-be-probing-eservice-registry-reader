@@ -90,7 +90,7 @@ public class SqsConfig {
 	 *
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public SqsConfig() throws IOException {
+	private SqsConfig() throws IOException {
 		Properties configuration = PropertiesLoader.loadProperties(ProjectConstants.PROPERTIES);
 		this.accessKey = configuration.getProperty(ACCESS_KEY);
 		this.secretKey = configuration.getProperty(SECRET_KEY);
