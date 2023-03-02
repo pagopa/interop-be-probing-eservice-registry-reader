@@ -1,6 +1,8 @@
 package it.pagopa.interop.probing.eservice.registry.reader.unit.producer;
 
+import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -9,14 +11,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.amazonaws.services.sqs.AmazonSQSAsync;
 import com.amazonaws.services.sqs.model.SendMessageRequest;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import it.pagopa.interop.probing.eservice.registry.reader.config.aws.sqs.SqsConfig;
 import it.pagopa.interop.probing.eservice.registry.reader.config.jacksonmapper.JacksonMapperConfig;
@@ -26,15 +27,11 @@ import it.pagopa.interop.probing.eservice.registry.reader.producer.ServicesSend;
 @ExtendWith(MockitoExtension.class)
 class ServicesSendTest {
 
-	@InjectMocks 
-	private ServicesSend servicesSend;
-	@Mock 
-	private JacksonMapperConfig jacksonMapperConfig;
-	@Mock 
+	@Mock
 	private SqsConfig sqs;
-	@Mock 
+	@Mock
 	private AmazonSQSAsync amazonSQS;
-	
+
 	private EserviceDTO eServiceDTO;
 
 	@BeforeEach
@@ -48,23 +45,24 @@ class ServicesSendTest {
 		eServiceDTO.setType("REST");
 		String[] basePath = { "basePath1", "basePath2" };
 		eServiceDTO.setBasePath(basePath);
-		
-		Mockito.when(sqs.amazonSQSAsync()).thenReturn(amazonSQS);
-	    Mockito.when(amazonSQS.sendMessage(Mockito.any())).thenReturn(null);
-	    Mockito.when(jacksonMapperConfig.getObjectMapper()).thenReturn(new ObjectMapper());
+
 	}
 
 	@Test
 	@DisplayName("The sendMessage method of ServicesSend class is tested.")
-	 void testSendMessage_whenGivenValidEServiceAndUrl_thenProducerWriteOnQueue() throws IOException {
-	    
+	void testSendMessage_whenGivenValidEServiceAndUrl_thenProducerWriteOnQueue() throws IOException {
+
 		String url = "http://queue/test-queue";
-		
-		SendMessageRequest sendMessageRequest = new SendMessageRequest().withQueueUrl(url)
-                    .withMessageBody(jacksonMapperConfig.getObjectMapper().writeValueAsString(eServiceDTO));
-            
-        servicesSend.sendMessage(eServiceDTO);
-            
-		verify(sqs.amazonSQSAsync()).sendMessage(sendMessageRequest);
+
+		try (MockedStatic<SqsConfig> cacheManagerMock = mockStatic(SqsConfig.class)) {
+			cacheManagerMock.when(SqsConfig::getInstance).thenReturn(sqs);
+			when(sqs.amazonSQSAsync()).thenReturn(amazonSQS);
+			Mockito.when(amazonSQS.sendMessage(Mockito.any())).thenReturn(null);
+			ServicesSend.getInstance().sendMessage(eServiceDTO);
+			SendMessageRequest sendMessageRequest = new SendMessageRequest().withQueueUrl(url).withMessageBody(
+					JacksonMapperConfig.getInstance().getObjectMapper().writeValueAsString(eServiceDTO));
+			verify(sqs.amazonSQSAsync()).sendMessage(sendMessageRequest);
+		}
+		;
 	}
 }

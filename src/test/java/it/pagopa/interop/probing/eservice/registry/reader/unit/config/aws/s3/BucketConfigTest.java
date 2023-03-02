@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.io.IOException;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
@@ -17,10 +17,13 @@ import it.pagopa.interop.probing.eservice.registry.reader.config.aws.s3.BucketCo
 
  class BucketConfigTest {
 
-	@InjectMocks
+
 	private BucketConfig bucketConfig;
 	
-
+	@BeforeEach
+	void setup() throws IOException {
+		bucketConfig = BucketConfig.getInstance();
+	}
 	
 	@Test
 	@DisplayName("Test AmazonS3 client build")
