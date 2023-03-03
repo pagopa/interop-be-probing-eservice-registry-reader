@@ -29,38 +29,38 @@ import it.pagopa.interop.probing.eservice.registry.reader.annotations.ValidateEn
 /**
  * The Class EnumValidator.
  */
-public class EnumValidator implements ConstraintValidator<ValidateEnum, String>{
+public class EnumValidator implements ConstraintValidator<ValidateEnum, String> {
 
-    /** The value list. */
-    private List<String> valueList;
+	/** The value list. */
+	private List<String> valueList;
 
-    /**
-     * Initialize.
-     *
-     * @param constraintAnnotation the constraint annotation
-     */
-    @Override
-    public void initialize(ValidateEnum constraintAnnotation) {
-        valueList = new ArrayList<>();
-        Class<? extends Enum<?>> enumClass = constraintAnnotation.enumClass();
+	/**
+	 * Initialize.
+	 *
+	 * @param constraintAnnotation the constraint annotation
+	 */
+	@Override
+	public void initialize(ValidateEnum constraintAnnotation) {
+		valueList = new ArrayList<>();
+		Class<? extends Enum<?>> enumClass = constraintAnnotation.enumClass();
 
-        @SuppressWarnings("rawtypes")
-        Enum[] enumValArr = enumClass.getEnumConstants();
-        for (Enum<?> enumVal : enumValArr) {
-            valueList.add(enumVal.toString().toUpperCase());
-        }
-    }
+		@SuppressWarnings("rawtypes")
+		Enum[] enumValArr = enumClass.getEnumConstants();
+		for (Enum<?> enumVal : enumValArr) {
+			valueList.add(enumVal.toString().toUpperCase());
+		}
+	}
 
-    /**
-     * Checks if is valid.
-     *
-     * @param value the value
-     * @param context the context
-     * @return true, if is valid
-     */
-    @Override
-    public boolean isValid(String value, ConstraintValidatorContext context) {
-        return valueList.contains(value.toUpperCase());
-    }
+	/**
+	 * Checks if is valid.
+	 *
+	 * @param value   the value
+	 * @param context the context
+	 * @return true, if is valid
+	 */
+	@Override
+	public boolean isValid(String value, ConstraintValidatorContext context) {
+		return value != null ? valueList.contains(value.toUpperCase()) : true;
+	}
 
 }

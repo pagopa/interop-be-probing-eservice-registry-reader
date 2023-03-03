@@ -28,7 +28,6 @@ import javax.validation.Payload;
 
 import it.pagopa.interop.probing.eservice.registry.reader.annotations.validator.EnumValidator;
 
-
 /**
  * The Interface ValidateEnum.
  */
@@ -37,31 +36,31 @@ import it.pagopa.interop.probing.eservice.registry.reader.annotations.validator.
 @Constraint(validatedBy = EnumValidator.class)
 public @interface ValidateEnum {
 
-	 /**
- 	 * Enum class.
- 	 *
- 	 * @return the class<? extends enum<?>>
- 	 */
- 	Class<? extends Enum<?>> enumClass();
+	/**
+	 * Enum class.
+	 *
+	 * @return the class<? extends enum<?>>
+	 */
+	Class<? extends Enum<?>> enumClass();
 
-    /**
-     * Message.
-     *
-     * @return the string
-     */
-    String message() default "value must be present in the enum {enumClass}";
+	/**
+	 * Message.
+	 *
+	 * @return the string
+	 */
+	String message() default "value must be present in the enum {enumClass}";
 
-    /**
-     * Groups.
-     *
-     * @return the class[]
-     */
-    Class<?>[] groups() default { };
+	/**
+	 * Groups.
+	 *
+	 * @return the class[]
+	 */
+	Class<?>[] groups() default {};
 
-    /**
-     * Payload.
-     *
-     * @return the class<? extends payload>[]
-     */
-    Class<? extends Payload>[] payload() default { }; 
+	/**
+	 * Payload.
+	 *
+	 * @return the class<? extends payload>[]
+	 */
+	Class<? extends Payload>[] payload() default {};
 }

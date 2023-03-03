@@ -21,11 +21,10 @@ import it.pagopa.interop.probing.eservice.registry.reader.config.jacksonmapper.B
 import it.pagopa.interop.probing.eservice.registry.reader.config.jacksonmapper.JacksonMapperConfig;
 import it.pagopa.interop.probing.eservice.registry.reader.dto.EserviceDTO;
 
+class JacksonMapperConfigTest {
 
- class JacksonMapperConfigTest {
-	
 	private List<EserviceDTO> listEservices;
-	
+
 	@BeforeEach
 	void setup() {
 		listEservices = new ArrayList<>();
@@ -35,7 +34,7 @@ import it.pagopa.interop.probing.eservice.registry.reader.dto.EserviceDTO;
 		eServiceDTO.setName("Service Name");
 		eServiceDTO.setProducerName("Producer Name");
 		eServiceDTO.setState("ACTIVE");
-		eServiceDTO.setType("REST");
+		eServiceDTO.setTechnology("REST");
 		String[] basePath = { "xxx.xxx/xxx", "yyy.yyy/xxx" };
 		eServiceDTO.setBasePath(basePath);
 		listEservices.add(eServiceDTO);
@@ -48,18 +47,20 @@ import it.pagopa.interop.probing.eservice.registry.reader.dto.EserviceDTO;
 		assertNotNull(mapper);
 		Assertions.assertFalse(mapper.isEnabled(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES));
 	}
-	
+
 	@Test
 	@DisplayName("Validate Jackson read object")
 	void testValidateJacksonReadObject_whenValidObject_thenReturnValidObjectList() throws Exception {
-		JacksonMapperConfig.getInstance().getObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		JacksonMapperConfig.getInstance().getObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
+				false);
 		SimpleModule validationModule = new SimpleModule();
 		validationModule.setDeserializerModifier(new BeanDeserializerModifierWithValidation());
 		JacksonMapperConfig.getInstance().getObjectMapper().registerModule(validationModule);
 
 		String stringDto = JacksonMapperConfig.getInstance().getObjectMapper().writeValueAsString(listEservices.get(0));
 
-		EserviceDTO resultMap = JacksonMapperConfig.getInstance().getObjectMapper().readValue(stringDto, EserviceDTO.class);
+		EserviceDTO resultMap = JacksonMapperConfig.getInstance().getObjectMapper().readValue(stringDto,
+				EserviceDTO.class);
 		assertEquals(listEservices.get(0).getEserviceId(), resultMap.getEserviceId());
 	}
 }

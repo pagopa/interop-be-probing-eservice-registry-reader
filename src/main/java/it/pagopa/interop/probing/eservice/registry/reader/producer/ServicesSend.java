@@ -29,7 +29,6 @@ import it.pagopa.interop.probing.eservice.registry.reader.config.jacksonmapper.J
 import it.pagopa.interop.probing.eservice.registry.reader.dto.EserviceDTO;
 import lombok.extern.slf4j.Slf4j;
 
-
 /**
  * The Class ServicesSend.
  */
@@ -37,10 +36,10 @@ import lombok.extern.slf4j.Slf4j;
 /** The Constant log. */
 @Slf4j
 public class ServicesSend {
-	
-    /** The sqs url services. */
-    private String sqsUrlServices;
-    
+
+	/** The sqs url services. */
+	private String sqsUrlServices;
+
 	/** The instance. */
 	private static ServicesSend instance;
 
@@ -57,7 +56,6 @@ public class ServicesSend {
 		return instance;
 	}
 
-	
 	/**
 	 * Instantiates a new services send.
 	 *
@@ -65,20 +63,21 @@ public class ServicesSend {
 	 */
 	private ServicesSend() throws IOException {
 		Properties configuration = PropertiesLoader.loadProperties("application.properties");
-		this.sqsUrlServices = configuration.getProperty("amazon.sqs.end-point.services-queue");
+		this.sqsUrlServices = configuration.getProperty("amazon.sqs.endpoint.services-queue");
 	}
-	
+
 	/**
-	 * Send a new message to the sqs queue which will be used for the legal fact generation.
+	 * Send a new message to the sqs queue which will be used for the legal fact
+	 * generation.
 	 *
 	 * @param service the service
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public void sendMessage(EserviceDTO service) throws IOException {
-		SendMessageRequest sendMessageRequest = null;
-            sendMessageRequest = new SendMessageRequest().withQueueUrl(sqsUrlServices)
-                    .withMessageBody(JacksonMapperConfig.getInstance().getObjectMapper().writeValueAsString(service));
-            SqsConfig.getInstance().amazonSQSAsync().sendMessage(sendMessageRequest);
-           log.info("Service has been published in SQS.");
+		SendMessageRequest sendMessageRequest = new SendMessageRequest().withQueueUrl(sqsUrlServices)
+				.withMessageBody(JacksonMapperConfig.getInstance().getObjectMapper().writeValueAsString(service));
+		SqsConfig.getInstance().getAmazonSQSAsync().sendMessage(sendMessageRequest);
+		log.info("Service " + service.getEserviceId() + " with version " + service.getVersionId()
+				+ " has been published in SQS.");
 	}
 }

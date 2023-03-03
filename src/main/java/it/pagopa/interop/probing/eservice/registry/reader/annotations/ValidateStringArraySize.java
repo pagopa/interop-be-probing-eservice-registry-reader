@@ -28,41 +28,39 @@ import javax.validation.Payload;
 
 import it.pagopa.interop.probing.eservice.registry.reader.annotations.validator.StringArrayValidator;
 
-
 /**
  * The Interface ValidateStringArray.
  */
-@Target({ ElementType.FIELD})
+@Target({ ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = StringArrayValidator.class)
 public @interface ValidateStringArraySize {
-	
-	
+
 	/**
 	 * Max size.
 	 *
 	 * @return the int
 	 */
 	int maxSize();
-	
-    /**
-     * Message.
-     *
-     * @return the string
-     */
-    String message() default "One of the strings of the array is more than {maxSize} characters long";
 
-    /**
-     * Groups.
-     *
-     * @return the class[]
-     */
-    Class<?>[] groups() default { };
+	/**
+	 * Message.
+	 *
+	 * @return the string
+	 */
+	String message() default "One of the strings of the array is more than {maxSize} characters long";
 
-    /**
-     * Payload.
-     *
-     * @return the class<? extends payload>[]
-     */
-    Class<? extends Payload>[] payload() default { }; 
+	/**
+	 * Groups.
+	 *
+	 * @return the class[]
+	 */
+	Class<?>[] groups() default {};
+
+	/**
+	 * Payload.
+	 *
+	 * @return the class<? extends payload>[]
+	 */
+	Class<? extends Payload>[] payload() default {};
 }

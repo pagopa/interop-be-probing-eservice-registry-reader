@@ -22,17 +22,12 @@ package it.pagopa.interop.probing.eservice.registry.reader.util;
  * The Class ProjectConstants.
  */
 public class ProjectConstants {
-	
+
 	private ProjectConstants() {
 		super();
 	}
 
 	/** The Constant PROPERTIES. */
 	public static final String PROPERTIES = "application.properties";
-	
-	/** The Constant BUCKET_NAME. */
-	public static final String BUCKET_NAME = "amazon.bucketS3.name";
-	
-	/** The Constant BUCKET_KEY. */
-	public static final String BUCKET_KEY = "amazon.bucketS3.key";
+
 }

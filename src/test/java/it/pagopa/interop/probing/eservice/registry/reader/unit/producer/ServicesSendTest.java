@@ -42,7 +42,7 @@ class ServicesSendTest {
 		eServiceDTO.setName("Service Name");
 		eServiceDTO.setProducerName("Producer Name");
 		eServiceDTO.setState("ACTIVE");
-		eServiceDTO.setType("REST");
+		eServiceDTO.setTechnology("REST");
 		String[] basePath = { "basePath1", "basePath2" };
 		eServiceDTO.setBasePath(basePath);
 
@@ -56,13 +56,12 @@ class ServicesSendTest {
 
 		try (MockedStatic<SqsConfig> cacheManagerMock = mockStatic(SqsConfig.class)) {
 			cacheManagerMock.when(SqsConfig::getInstance).thenReturn(sqs);
-			when(sqs.amazonSQSAsync()).thenReturn(amazonSQS);
-			Mockito.when(amazonSQS.sendMessage(Mockito.any())).thenReturn(null);
+			when(sqs.getAmazonSQSAsync()).thenReturn(amazonSQS);
+			when(amazonSQS.sendMessage(Mockito.any())).thenReturn(null);
 			ServicesSend.getInstance().sendMessage(eServiceDTO);
 			SendMessageRequest sendMessageRequest = new SendMessageRequest().withQueueUrl(url).withMessageBody(
 					JacksonMapperConfig.getInstance().getObjectMapper().writeValueAsString(eServiceDTO));
-			verify(sqs.amazonSQSAsync()).sendMessage(sendMessageRequest);
+			verify(amazonSQS).sendMessage(sendMessageRequest);
 		}
-		;
 	}
 }

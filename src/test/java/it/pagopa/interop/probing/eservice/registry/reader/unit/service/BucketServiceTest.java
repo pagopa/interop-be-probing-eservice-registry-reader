@@ -30,14 +30,14 @@ import it.pagopa.interop.probing.eservice.registry.reader.service.BucketService;
 
 @ExtendWith(MockitoExtension.class)
 class BucketServiceTest {
-	
-	@Mock 
+
+	@Mock
 	private BucketConfig bucketConfig;
-	@Mock 
+	@Mock
 	private AmazonS3 s3Client;
-	
+
 	private List<EserviceDTO> listEservices;
-	
+
 	@BeforeEach
 	void setup() {
 		listEservices = new ArrayList<>();
@@ -47,7 +47,7 @@ class BucketServiceTest {
 		eServiceDTO.setName("Service Name");
 		eServiceDTO.setProducerName("Producer Name");
 		eServiceDTO.setState("ACTIVE");
-		eServiceDTO.setType("REST");
+		eServiceDTO.setTechnology("REST");
 		String[] basePath = { "xxx.xxx/xxx", "yyy.yyy/xxx" };
 		eServiceDTO.setBasePath(basePath);
 		listEservices.add(eServiceDTO);
@@ -69,7 +69,7 @@ class BucketServiceTest {
 			List<EserviceDTO> resp = BucketService.getInstance().readObject();
 			assertEquals(listEservices.size(), resp.size());
 			assertEquals(stringList, JacksonMapperConfig.getInstance().getObjectMapper().writeValueAsString(resp));
-		}		
+		}
 	}
 
 }

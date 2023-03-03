@@ -23,7 +23,6 @@ import javax.validation.ConstraintValidatorContext;
 
 import it.pagopa.interop.probing.eservice.registry.reader.annotations.ValidateStringArraySize;
 
-
 /**
  * The Class StringArrayValidator.
  */
@@ -45,15 +44,17 @@ public class StringArrayValidator implements ConstraintValidator<ValidateStringA
 	/**
 	 * Checks if is valid.
 	 *
-	 * @param array the array
+	 * @param array   the array
 	 * @param context the context
 	 * @return true, if is valid
 	 */
 	@Override
 	public boolean isValid(String[] array, ConstraintValidatorContext context) {
-		for (String s : array) {
-			if (s.length() > maxSize) {
-				return false;
+		if (array != null) {
+			for (String s : array) {
+				if (s.length() > maxSize) {
+					return false;
+				}
 			}
 		}
 		return true;

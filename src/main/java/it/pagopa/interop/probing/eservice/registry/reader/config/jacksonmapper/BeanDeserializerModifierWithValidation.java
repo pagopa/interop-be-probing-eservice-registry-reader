@@ -29,21 +29,22 @@ import com.fasterxml.jackson.databind.deser.BeanDeserializerModifier;
  */
 public class BeanDeserializerModifierWithValidation extends BeanDeserializerModifier {
 
-    /**
-     * Modify deserializer.
-     *
-     * @param config the config
-     * @param beanDesc the bean desc
-     * @param deserializer the deserializer
-     * @return the json deserializer
-     */
-    @Override
-    public JsonDeserializer<?> modifyDeserializer(DeserializationConfig config, BeanDescription beanDesc, JsonDeserializer<?> deserializer) {
-        if (deserializer instanceof BeanDeserializer) {
-            return new BeanDeserializerWithValidation((BeanDeserializer) deserializer);
-        }
+	/**
+	 * Modify deserializer.
+	 *
+	 * @param config       the config
+	 * @param beanDesc     the bean desc
+	 * @param deserializer the deserializer
+	 * @return the json deserializer
+	 */
+	@Override
+	public JsonDeserializer<?> modifyDeserializer(DeserializationConfig config, BeanDescription beanDesc,
+			JsonDeserializer<?> deserializer) {
+		if (deserializer instanceof BeanDeserializer) {
+			return new BeanDeserializerWithValidation((BeanDeserializer) deserializer);
+		}
 
-        return deserializer;
-    }
+		return deserializer;
+	}
 
 }

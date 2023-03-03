@@ -27,25 +27,23 @@ import java.util.Properties;
  */
 public class PropertiesLoader {
 
-    private PropertiesLoader() {
+	private PropertiesLoader() {
 		super();
 	}
 
 	/**
-     * Load properties.
-     *
-     * @param resourceFileName the resource file name
-     * @return the properties
-     * @throws IOException Signals that an I/O exception has occurred.
-     */
-    public static Properties loadProperties(String resourceFileName) throws IOException {
-        Properties configuration = new Properties();
-        InputStream inputStream = PropertiesLoader.class
-          .getClassLoader()
-          .getResourceAsStream(resourceFileName);
-        configuration.load(inputStream);
-        inputStream.close();
-        return configuration;
-    }
+	 * Load properties.
+	 *
+	 * @param resourceFileName the resource file name
+	 * @return the properties
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public static Properties loadProperties(String resourceFileName) throws IOException {
+		Properties configuration = new Properties();
+		InputStream inputStream = PropertiesLoader.class.getClassLoader().getResourceAsStream(resourceFileName);
+		configuration.load(inputStream);
+		inputStream.close();
+		return configuration;
+	}
 
 }

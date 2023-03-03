@@ -26,7 +26,7 @@ import javax.validation.constraints.Size;
 import it.pagopa.interop.probing.eservice.registry.reader.annotations.ValidateEnum;
 import it.pagopa.interop.probing.eservice.registry.reader.annotations.ValidateStringArraySize;
 import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceState;
-import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceType;
+import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceTechnology;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -72,16 +72,12 @@ public class EserviceDTO {
 
 	/** The type. */
 	@NotBlank(message = "must not be blank")
-	@ValidateEnum(
-		     enumClass = EserviceType.class
-		 )
-	private String type;
+	@ValidateEnum(enumClass = EserviceTechnology.class)
+	private String technology;
 
 	/** The state. */
 	@NotBlank(message = "must not be blank")
-	@ValidateEnum(
-		     enumClass = EserviceState.class
-		 )
+	@ValidateEnum(enumClass = EserviceState.class)
 	private String state;
 
 	/** The base path. */
