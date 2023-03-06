@@ -18,6 +18,8 @@
 ***************************************************************************/
 package it.pagopa.interop.probing.eservice.registry.reader.annotations.validator;
 
+import java.util.Objects;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
@@ -50,7 +52,7 @@ public class StringArrayValidator implements ConstraintValidator<ValidateStringA
 	 */
 	@Override
 	public boolean isValid(String[] array, ConstraintValidatorContext context) {
-		if (array != null) {
+		if (Objects.nonNull(array)) {
 			for (String s : array) {
 				if (s.length() > maxSize) {
 					return false;

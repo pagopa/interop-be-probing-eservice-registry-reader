@@ -18,7 +18,7 @@
 ***************************************************************************/
 package it.pagopa.interop.probing.eservice.registry.reader.config.aws.sqs;
 
-import java.io.IOException;
+import java.util.Objects;
 
 import com.amazonaws.services.sqs.AmazonSQSAsync;
 import com.amazonaws.services.sqs.AmazonSQSAsyncClientBuilder;
@@ -44,12 +44,11 @@ public class SqsConfig {
 
 	/**
 	 * Gets the single instance of SqsConfig.
-	 *
+	 * 
 	 * @return single instance of SqsConfig
-	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static SqsConfig getInstance() {
-		if (instance == null) {
+		if (Objects.isNull(instance)) {
 			instance = new SqsConfig();
 		}
 		return instance;
@@ -57,8 +56,6 @@ public class SqsConfig {
 
 	/**
 	 * Instantiates a new sqs config.
-	 *
-	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	private SqsConfig() {
 		this.amazonSQSAsync = amazonSQSAsync();

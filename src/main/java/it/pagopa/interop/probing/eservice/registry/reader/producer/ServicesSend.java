@@ -19,7 +19,7 @@
 package it.pagopa.interop.probing.eservice.registry.reader.producer;
 
 import java.io.IOException;
-import java.util.Properties;
+import java.util.Objects;
 
 import com.amazonaws.services.sqs.model.SendMessageRequest;
 
@@ -43,14 +43,15 @@ public class ServicesSend {
 	/** The instance. */
 	private static ServicesSend instance;
 
+	private static final String SQS_URL = "amazon.sqs.endpoint.services-queue";
+
 	/**
 	 * Gets the single instance of ServicesSend.
-	 *
 	 * @return single instance of ServicesSend
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException 
 	 */
-	public static ServicesSend getInstance() throws IOException {
-		if (instance == null) {
+	public static ServicesSend getInstance() throws IOException{
+		if (Objects.isNull(instance)) {
 			instance = new ServicesSend();
 		}
 		return instance;
@@ -58,12 +59,10 @@ public class ServicesSend {
 
 	/**
 	 * Instantiates a new services send.
-	 *
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException 
 	 */
 	private ServicesSend() throws IOException {
-		Properties configuration = PropertiesLoader.loadProperties("application.properties");
-		this.sqsUrlServices = configuration.getProperty("amazon.sqs.endpoint.services-queue");
+		this.sqsUrlServices = PropertiesLoader.getInstance().getKey(SQS_URL);
 	}
 
 	/**

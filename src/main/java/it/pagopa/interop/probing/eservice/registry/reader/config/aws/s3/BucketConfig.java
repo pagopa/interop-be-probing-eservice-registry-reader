@@ -18,7 +18,7 @@
 ***************************************************************************/
 package it.pagopa.interop.probing.eservice.registry.reader.config.aws.s3;
 
-import java.io.IOException;
+import java.util.Objects;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
@@ -35,10 +35,9 @@ public class BucketConfig {
 	 * Gets the single instance of BucketConfig.
 	 *
 	 * @return single instance of BucketConfig
-	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public static BucketConfig getInstance() {
-		if (instance == null) {
+		if (Objects.isNull(instance)) {
 			instance = new BucketConfig();
 		}
 		return instance;
@@ -48,7 +47,6 @@ public class BucketConfig {
 	 * Amazon S 3.
 	 *
 	 * @return the amazon S 3
-	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public AmazonS3 amazonS3() {
 		return AmazonS3ClientBuilder.standard().build();

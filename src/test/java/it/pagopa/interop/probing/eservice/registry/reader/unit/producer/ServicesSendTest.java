@@ -35,7 +35,7 @@ class ServicesSendTest {
 	private EserviceDTO eServiceDTO;
 
 	@BeforeEach
-	void setup() throws IOException {
+	void setup() {
 		eServiceDTO = new EserviceDTO();
 		eServiceDTO.setEserviceId(UUID.randomUUID().toString());
 		eServiceDTO.setVersionId(UUID.randomUUID().toString());

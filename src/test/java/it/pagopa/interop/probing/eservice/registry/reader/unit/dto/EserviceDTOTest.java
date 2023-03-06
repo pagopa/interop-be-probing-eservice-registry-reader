@@ -18,7 +18,7 @@ class EserviceDTOTest {
 	private EserviceDTO eServiceDTO;
 
 	@BeforeEach
-	void setup() throws IOException {
+	void setup() {
 		eServiceDTO = new EserviceDTO();
 		eServiceDTO.setEserviceId("0b37ac73-cbd8-47f1-a14c-19bcc8f8f8e7");
 		eServiceDTO.setVersionId("226574b8-82a1-4844-9484-55fffc9c15ef");

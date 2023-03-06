@@ -20,6 +20,7 @@ package it.pagopa.interop.probing.eservice.registry.reader.annotations.validator
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -60,7 +61,7 @@ public class EnumValidator implements ConstraintValidator<ValidateEnum, String> 
 	 */
 	@Override
 	public boolean isValid(String value, ConstraintValidatorContext context) {
-		return value != null ? valueList.contains(value.toUpperCase()) : true;
+		return Objects.nonNull(value) ? valueList.contains(value.toUpperCase()) : true;
 	}
 
 }

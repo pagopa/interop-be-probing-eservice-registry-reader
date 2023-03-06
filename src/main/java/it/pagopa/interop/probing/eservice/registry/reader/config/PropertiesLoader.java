@@ -2,7 +2,7 @@
 *
 * Copyright 2023 (C) DXC
 *
-* Created on  : Feb 24, 2023
+* Created on  : Mar 6, 2023
 * Author      : dxc technology
 * Project Name: interop-be-probing-eservice-registry-reader 
 * Package     : it.pagopa.interop.probing.eservice.registry.reader.config
@@ -22,28 +22,69 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * The Class PropertiesLoader.
  */
+/** The Constant log. */
+@Slf4j
 public class PropertiesLoader {
 
-	private PropertiesLoader() {
-		super();
-	}
+	/** The instance. */
+	private static PropertiesLoader instance;
+
+	/** The props. */
+	private Properties props;
+	
+	/** The Constant PROPERTIES. */
+	public static final String PROPERTIES = "application.properties";
 
 	/**
 	 * Load properties.
 	 *
-	 * @param resourceFileName the resource file name
 	 * @return the properties
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public static Properties loadProperties(String resourceFileName) throws IOException {
-		Properties configuration = new Properties();
-		InputStream inputStream = PropertiesLoader.class.getClassLoader().getResourceAsStream(resourceFileName);
-		configuration.load(inputStream);
-		inputStream.close();
-		return configuration;
+	public PropertiesLoader() throws IOException {
+		InputStream inputStream = PropertiesLoader.class.getClassLoader()
+				.getResourceAsStream(PROPERTIES);
+		this.props = new Properties();
+		try {
+			this.props.load(inputStream);
+		} catch (IOException e) {
+			log.error("Error during reading properties from file");
+			throw e;
+		} catch (NullPointerException e) {
+			log.error("Error during reading properties from file");
+			throw e;
+		}
+		log.info("Properties loaded successfully");
+	}
+
+	/**
+	 * Gets the key.
+	 *
+	 * @param key the key
+	 * @return the key
+	 */
+	public String getKey(String key) {
+		return this.props.getProperty(key);
+	}
+
+	/**
+	 * Instance.
+	 *
+	 * @return the properties loader
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	static public PropertiesLoader getInstance() throws IOException {
+		if (instance == null) {
+			synchronized (PropertiesLoader.class) {
+				instance = new PropertiesLoader();
+			}
+		}
+		return instance;
 	}
 
 }

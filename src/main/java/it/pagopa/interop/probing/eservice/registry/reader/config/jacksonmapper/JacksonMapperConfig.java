@@ -18,6 +18,8 @@
 ***************************************************************************/
 package it.pagopa.interop.probing.eservice.registry.reader.config.jacksonmapper;
 
+import java.util.Objects;
+
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -32,11 +34,10 @@ public class JacksonMapperConfig {
 
 	/**
 	 * Gets the single instance of JacksonMapperConfig.
-	 *
 	 * @return single instance of JacksonMapperConfig
 	 */
 	public static JacksonMapperConfig getInstance() {
-		if (instance == null) {
+		if (Objects.isNull(instance)) {
 			instance = new JacksonMapperConfig();
 		}
 		return instance;
@@ -44,7 +45,6 @@ public class JacksonMapperConfig {
 
 	/**
 	 * Gets the object mapper.
-	 *
 	 * @return the object mapper
 	 */
 	public ObjectMapper getObjectMapper() {
