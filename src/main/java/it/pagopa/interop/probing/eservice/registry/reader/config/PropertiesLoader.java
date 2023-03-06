@@ -20,6 +20,7 @@ package it.pagopa.interop.probing.eservice.registry.reader.config;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 import java.util.Properties;
 
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +37,7 @@ public class PropertiesLoader {
 
 	/** The props. */
 	private Properties props;
-	
+
 	/** The Constant PROPERTIES. */
 	public static final String PROPERTIES = "application.properties";
 
@@ -47,8 +48,7 @@ public class PropertiesLoader {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public PropertiesLoader() throws IOException {
-		InputStream inputStream = PropertiesLoader.class.getClassLoader()
-				.getResourceAsStream(PROPERTIES);
+		InputStream inputStream = PropertiesLoader.class.getClassLoader().getResourceAsStream(PROPERTIES);
 		this.props = new Properties();
 		try {
 			this.props.load(inputStream);
@@ -79,7 +79,7 @@ public class PropertiesLoader {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	static public PropertiesLoader getInstance() throws IOException {
-		if (instance == null) {
+		if (Objects.isNull(instance)) {
 			synchronized (PropertiesLoader.class) {
 				instance = new PropertiesLoader();
 			}
