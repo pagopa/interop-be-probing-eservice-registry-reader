@@ -1,9 +1,17 @@
-FROM maven:3.8.3-openjdk-17 AS MAVEN_BUILD
-WORKDIR /interop-be-probing-eservice-registry-reader/
-COPY . .
-RUN mvn -q clean package -Dmaven.test.skip=true
+## BUILD ##
+FROM maven:3.8.3-jdk-17 AS build
 
-FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
-COPY --from=MAVEN_BUILD /interop-be-probing-eservice-registry-reader/target/*.jar /app/app.jar
-ENTRYPOINT ["java", "-jar", "app.jar"]
+
+COPY pom.xml .
+COPY src ./src
+
+RUN mvn -q package -Dmaven.test.skip=true
+
+
+## RUN ##
+FROM openjdk:17-alpine
+
+COPY --from=build /app/target/*.jar /app/app.jar
+
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
