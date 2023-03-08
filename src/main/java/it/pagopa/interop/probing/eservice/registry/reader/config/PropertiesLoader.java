@@ -20,6 +20,7 @@ package it.pagopa.interop.probing.eservice.registry.reader.config;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Enumeration;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -51,7 +52,11 @@ public class PropertiesLoader {
 		InputStream inputStream = PropertiesLoader.class.getClassLoader().getResourceAsStream(PROPERTIES);
 		this.props = new Properties();
 		try {
-			this.props.load(inputStream);
+			this.props.load(inputStream);		
+			for (Enumeration<Object> enumeration=this.props.elements(); enumeration.hasMoreElements();) {
+			      log.info(enumeration.nextElement().toString());
+			}
+
 		} catch (IOException e) {
 			log.error("Error during reading properties from file");
 			throw e;
