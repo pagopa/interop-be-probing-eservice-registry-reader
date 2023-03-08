@@ -3,10 +3,9 @@ FROM maven:3.8.3-openjdk-17 AS build
 
 WORKDIR /app
 
-COPY pom.xml .
-COPY src ./src
+COPY . .
 
-RUN mvn -q package -Dmaven.test.skip=true
+RUN mvn -q clean package -Dmaven.test.skip=true
 
 
 ## RUN ##
