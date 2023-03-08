@@ -34,6 +34,7 @@ import it.pagopa.interop.probing.eservice.registry.reader.dto.EserviceDTO;
 /**
  * The Class BucketService.
  */
+@Slf4j
 public class BucketService {
 
 	/** The instance. */
@@ -65,7 +66,7 @@ public class BucketService {
 	 */
 	public List<EserviceDTO> readObject() throws IOException {
 		String bucketName = PropertiesLoader.getInstance().getKey(BUCKET_NAME);
-		log.info("BUCKET_NAME :: " + bucketName)
+		log.info("BUCKET_NAME :: " + bucketName);
 		String bucketKey = PropertiesLoader.getInstance().getKey(BUCKET_KEY);
 		S3Object s3Object = BucketConfig.getInstance().amazonS3()
 				.getObject(new GetObjectRequest(bucketName, bucketKey));
