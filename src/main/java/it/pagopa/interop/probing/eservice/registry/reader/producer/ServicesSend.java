@@ -73,7 +73,6 @@ public class ServicesSend {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public void sendMessage(EserviceDTO service) throws IOException {
-		log.info(sqsUrlServices);
 		SendMessageRequest sendMessageRequest = new SendMessageRequest().withQueueUrl(sqsUrlServices)
 				.withMessageBody(JacksonMapperConfig.getInstance().getObjectMapper().writeValueAsString(service));
 		SqsConfig.getInstance().getAmazonSQSAsync().sendMessage(sendMessageRequest);
