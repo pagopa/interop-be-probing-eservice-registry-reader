@@ -49,7 +49,7 @@ public class BucketConfig {
 	 * @return the amazon S 3
 	 */
 	public AmazonS3 amazonS3() {
-		provider = new DefaultAWSCredentialsProviderChain();
+		AWSCredentialsProvider provider = new DefaultAWSCredentialsProviderChain();
 		return AmazonS3ClientBuilder.standard().withCredentials(provider.GetCredentials()).build();
 	}
 
