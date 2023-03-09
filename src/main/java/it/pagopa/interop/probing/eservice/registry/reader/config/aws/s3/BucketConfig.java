@@ -22,7 +22,7 @@ import java.util.Objects;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 /**
  * The Class BucketConfig.
  */
@@ -49,7 +49,8 @@ public class BucketConfig {
 	 * @return the amazon S 3
 	 */
 	public AmazonS3 amazonS3() {
-		return AmazonS3ClientBuilder.standard().build();
+		provider = new DefaultAWSCredentialsProviderChain();
+		return AmazonS3ClientBuilder.standard().withCredentials(provider.GetCredentials()).build();
 	}
 
 }
