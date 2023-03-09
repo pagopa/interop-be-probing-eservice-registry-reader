@@ -42,10 +42,10 @@ public class BucketService {
 	private static BucketService instance;
 
 	/** The Constant BUCKET_NAME. */
-	private static final String BUCKET_NAME = "amazon.bucketS3.name";
+	private static final String BUCKET_NAME = "S3_BUCKET_NAME";
 
 	/** The Constant BUCKET_KEY. */
-	private static final String BUCKET_KEY = "amazon.bucketS3.key";
+	private static final String BUCKET_KEY = "S3_BUCKET_KEY";
 
 	/**
 	 * Gets the single instance of BucketService.

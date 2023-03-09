@@ -19,10 +19,8 @@
 package it.pagopa.interop.probing.eservice.registry.reader.config;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Enumeration;
+import java.util.Map;
 import java.util.Objects;
-import java.util.Properties;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,10 +35,7 @@ public class PropertiesLoader {
 	private static PropertiesLoader instance;
 
 	/** The props. */
-	private Properties props;
-
-	/** The Constant PROPERTIES. */
-	public static final String PROPERTIES = "application.properties";
+	private Map<String, String> props;
 
 	/**
 	 * Load properties.
@@ -49,21 +44,7 @@ public class PropertiesLoader {
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
 	public PropertiesLoader() throws IOException {
-		InputStream inputStream = PropertiesLoader.class.getClassLoader().getResourceAsStream(PROPERTIES);
-		this.props = new Properties();
-		try {
-			this.props.load(inputStream);		
-			for (Enumeration<Object> enumeration=this.props.elements(); enumeration.hasMoreElements();) {
-			      log.info(enumeration.nextElement().toString());
-			}
-
-		} catch (IOException e) {
-			log.error("Error during reading properties from file");
-			throw e;
-		} catch (NullPointerException e) {
-			log.error("Error during reading properties from file");
-			throw e;
-		}
+		this.props = System.getenv();
 		log.info("Properties loaded successfully");
 	}
 
@@ -74,7 +55,7 @@ public class PropertiesLoader {
 	 * @return the key
 	 */
 	public String getKey(String key) {
-		return this.props.getProperty(key);
+		return this.props.get(key);
 	}
 
 	/**
