@@ -50,7 +50,7 @@ public class ServicesSend {
 	 * @return single instance of ServicesSend
 	 * @throws IOException 
 	 */
-	public static ServicesSend getInstance() throws IOException{
+	public static ServicesSend getInstance(){
 		if (Objects.isNull(instance)) {
 			instance = new ServicesSend();
 		}
@@ -61,7 +61,7 @@ public class ServicesSend {
 	 * Instantiates a new services send.
 	 * @throws IOException 
 	 */
-	private ServicesSend() throws IOException {
+	private ServicesSend() {
 		this.sqsUrlServices = PropertiesLoader.getInstance().getKey(SQS_URL);
 	}
 

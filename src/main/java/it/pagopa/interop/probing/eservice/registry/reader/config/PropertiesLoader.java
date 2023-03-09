@@ -41,9 +41,8 @@ public class PropertiesLoader {
 	 * Load properties.
 	 *
 	 * @return the properties
-	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public PropertiesLoader() throws IOException {
+	public PropertiesLoader() {
 		this.props = System.getenv();
 		log.info("Properties loaded successfully");
 	}
@@ -62,9 +61,8 @@ public class PropertiesLoader {
 	 * Instance.
 	 *
 	 * @return the properties loader
-	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	static public PropertiesLoader getInstance() throws IOException {
+	static public PropertiesLoader getInstance(){
 		if (Objects.isNull(instance)) {
 			synchronized (PropertiesLoader.class) {
 				instance = new PropertiesLoader();
