@@ -31,11 +31,9 @@ import it.pagopa.interop.probing.eservice.registry.reader.config.aws.s3.BucketCo
 import it.pagopa.interop.probing.eservice.registry.reader.config.jacksonmapper.JacksonMapperConfig;
 import it.pagopa.interop.probing.eservice.registry.reader.dto.EserviceDTO;
 
-import lombok.extern.slf4j.Slf4j;
 /**
  * The Class BucketService.
  */
-@Slf4j
 public class BucketService {
 
 	/** The instance. */
@@ -67,7 +65,6 @@ public class BucketService {
 	 */
 	public List<EserviceDTO> readObject() throws IOException {
 		String bucketName = PropertiesLoader.getInstance().getKey(BUCKET_NAME);
-		log.info("BUCKET_NAME :: " + bucketName);
 		String bucketKey = PropertiesLoader.getInstance().getKey(BUCKET_KEY);
 		S3Object s3Object = BucketConfig.getInstance().amazonS3()
 				.getObject(new GetObjectRequest(bucketName, bucketKey));

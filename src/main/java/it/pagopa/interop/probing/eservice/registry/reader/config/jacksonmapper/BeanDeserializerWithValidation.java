@@ -32,12 +32,9 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.BeanDeserializer;
 import com.fasterxml.jackson.databind.deser.BeanDeserializerBase;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * The Class BeanDeserializerWithValidation.
  */
-@Slf4j
 public class BeanDeserializerWithValidation extends BeanDeserializer {
 
 	/** The Constant serialVersionUID. */
@@ -63,7 +60,6 @@ public class BeanDeserializerWithValidation extends BeanDeserializer {
 	@Override
 	public Object deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
 		Object instance = super.deserialize(p, ctxt);
-		log.info(instance.toString());
 		validate(instance);
 		return instance;
 	}

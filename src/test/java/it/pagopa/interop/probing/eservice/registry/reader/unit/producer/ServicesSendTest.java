@@ -36,6 +36,8 @@ class ServicesSendTest {
 	private PropertiesLoader propertiesLoader;
 
 	private EserviceDTO eServiceDTO;
+	
+	private static final String SQS_GROUP_ID = "services-group";
 
 	@BeforeEach
 	void setup() {
@@ -65,7 +67,7 @@ class ServicesSendTest {
 			when(amazonSQS.sendMessage(Mockito.any())).thenReturn(null);
 			when(propertiesLoader.getKey(Mockito.any())).thenReturn(url);
 			ServicesSend.getInstance().sendMessage(eServiceDTO);
-			SendMessageRequest sendMessageRequest = new SendMessageRequest().withQueueUrl(url).withMessageBody(
+			SendMessageRequest sendMessageRequest = new SendMessageRequest().withQueueUrl(url).withMessageGroupId(SQS_GROUP_ID).withMessageBody(
 					JacksonMapperConfig.getInstance().getObjectMapper().writeValueAsString(eServiceDTO));
 			verify(amazonSQS).sendMessage(sendMessageRequest);
 		}
