@@ -2,7 +2,7 @@
 *
 * Copyright 2023 (C) DXC
 *
-* Created on  : Mar 2, 2023
+* Created on  : Mar 13, 2023
 * Author      : dxc technology
 * Project Name: interop-be-probing-eservice-registry-reader 
 * Package     : it.pagopa.interop.probing.eservice.registry.reader.producer
@@ -43,14 +43,18 @@ public class ServicesSend {
 	/** The instance. */
 	private static ServicesSend instance;
 
-	private static final String SQS_URL = "amazon.sqs.endpoint.services-queue";
+	/** The Constant SQS_URL. */
+	private static final String SQS_URL = "SQS_ENDPOINT_SERVICES_QUEUE";
+
+	/** The Constant SQS_GROUP_ID. */
+	private static final String SQS_GROUP_ID = "services-group";
 
 	/**
 	 * Gets the single instance of ServicesSend.
+	 *
 	 * @return single instance of ServicesSend
-	 * @throws IOException 
 	 */
-	public static ServicesSend getInstance() throws IOException{
+	public static ServicesSend getInstance() {
 		if (Objects.isNull(instance)) {
 			instance = new ServicesSend();
 		}
@@ -59,9 +63,8 @@ public class ServicesSend {
 
 	/**
 	 * Instantiates a new services send.
-	 * @throws IOException 
 	 */
-	private ServicesSend() throws IOException {
+	private ServicesSend() {
 		this.sqsUrlServices = PropertiesLoader.getInstance().getKey(SQS_URL);
 	}
 
@@ -74,6 +77,7 @@ public class ServicesSend {
 	 */
 	public void sendMessage(EserviceDTO service) throws IOException {
 		SendMessageRequest sendMessageRequest = new SendMessageRequest().withQueueUrl(sqsUrlServices)
+				.withMessageGroupId(SQS_GROUP_ID)
 				.withMessageBody(JacksonMapperConfig.getInstance().getObjectMapper().writeValueAsString(service));
 		SqsConfig.getInstance().getAmazonSQSAsync().sendMessage(sendMessageRequest);
 		log.info("Service " + service.getEserviceId() + " with version " + service.getVersionId()

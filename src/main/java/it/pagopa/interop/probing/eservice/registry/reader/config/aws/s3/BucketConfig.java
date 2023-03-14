@@ -20,9 +20,9 @@ package it.pagopa.interop.probing.eservice.registry.reader.config.aws.s3;
 
 import java.util.Objects;
 
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-
 /**
  * The Class BucketConfig.
  */
@@ -49,7 +49,7 @@ public class BucketConfig {
 	 * @return the amazon S 3
 	 */
 	public AmazonS3 amazonS3() {
-		return AmazonS3ClientBuilder.standard().build();
+		return AmazonS3ClientBuilder.standard().withCredentials(new DefaultAWSCredentialsProviderChain()).build();
 	}
 
 }

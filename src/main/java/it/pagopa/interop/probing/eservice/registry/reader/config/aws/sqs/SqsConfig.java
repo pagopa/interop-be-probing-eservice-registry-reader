@@ -20,6 +20,7 @@ package it.pagopa.interop.probing.eservice.registry.reader.config.aws.sqs;
 
 import java.util.Objects;
 
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.sqs.AmazonSQSAsync;
 import com.amazonaws.services.sqs.AmazonSQSAsyncClientBuilder;
 
@@ -67,7 +68,7 @@ public class SqsConfig {
 	 * @return the amazon SQS async
 	 */
 	private AmazonSQSAsync amazonSQSAsync() {
-		return AmazonSQSAsyncClientBuilder.standard().build();
+		return AmazonSQSAsyncClientBuilder.standard().withCredentials(new DefaultAWSCredentialsProviderChain()).build();
 	}
 
 }
