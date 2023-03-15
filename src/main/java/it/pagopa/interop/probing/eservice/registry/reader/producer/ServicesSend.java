@@ -44,7 +44,7 @@ public class ServicesSend {
 	private static ServicesSend instance;
 
 	/** The Constant SQS_URL. */
-	private static final String SQS_URL = "SQS_ENDPOINT_SERVICES_QUEUE";
+	private static final String SQS_URL = "amazon.sqs.endpoint.services-queue";
 
 	/** The Constant SQS_GROUP_ID. */
 	private static final String SQS_GROUP_ID = "services-group";
@@ -53,8 +53,9 @@ public class ServicesSend {
 	 * Gets the single instance of ServicesSend.
 	 *
 	 * @return single instance of ServicesSend
+	 * @throws IOException
 	 */
-	public static ServicesSend getInstance() {
+	public static ServicesSend getInstance() throws IOException {
 		if (Objects.isNull(instance)) {
 			instance = new ServicesSend();
 		}
@@ -63,8 +64,10 @@ public class ServicesSend {
 
 	/**
 	 * Instantiates a new services send.
+	 * 
+	 * @throws IOException
 	 */
-	private ServicesSend() {
+	private ServicesSend() throws IOException {
 		this.sqsUrlServices = PropertiesLoader.getInstance().getKey(SQS_URL);
 	}
 

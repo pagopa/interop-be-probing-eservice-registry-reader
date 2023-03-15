@@ -2,31 +2,30 @@
 *
 * Copyright 2023 (C) DXC
 *
-* Created on  : Mar 6, 2023
-* Author      : dxc technology
-* Project Name: interop-be-probing-eservice-registry-reader 
-* Package     : it.pagopa.interop.probing.eservice.registry.reader.config
-* File Name   : PropertiesLoader.java
+* Created on  : 7 mar 2023
+* Author      : dxc technology
+* Project Name: interop-be-probing-eservice-registry-reader 
+* Package     : it.pagopa.interop.probing.eservice.registry.reader.config
+* File Name   : PropertiesLoader.java
 *
 *-----------------------------------------------------------------------------
 * Revision History (Release )
 *-----------------------------------------------------------------------------
-* VERSION     DESCRIPTION OF CHANGE
+* VERSION     DESCRIPTION OF CHANGE
 *-----------------------------------------------------------------------------
-** --/1.0  |  Initial Create.
+** --/1.0  |  Initial Create.
 **---------|------------------------------------------------------------------
 ***************************************************************************/
 package it.pagopa.interop.probing.eservice.registry.reader.config;
 
 import java.io.IOException;
-import java.util.Map;
 import java.util.Objects;
+
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * The Class PropertiesLoader.
- */
 /** The Constant log. */
 @Slf4j
 public class PropertiesLoader {
@@ -35,15 +34,15 @@ public class PropertiesLoader {
 	private static PropertiesLoader instance;
 
 	/** The props. */
-	private Map<String, String> props;
+	private Config props;
 
 	/**
-	 * Load properties.
+	 * Instantiates a new properties loader.
 	 *
-	 * @return the properties
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public PropertiesLoader() {
-		this.props = System.getenv();
+	public PropertiesLoader() throws IOException {
+		this.props = ConfigFactory.load();
 		log.info("Properties loaded successfully");
 	}
 
@@ -54,15 +53,16 @@ public class PropertiesLoader {
 	 * @return the key
 	 */
 	public String getKey(String key) {
-		return this.props.get(key);
+		return this.props.getString(key);
 	}
 
 	/**
-	 * Instance.
+	 * Gets the single instance of PropertiesLoader.
 	 *
-	 * @return the properties loader
+	 * @return single instance of PropertiesLoader
+	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	static public PropertiesLoader getInstance(){
+	static public PropertiesLoader getInstance() throws IOException {
 		if (Objects.isNull(instance)) {
 			synchronized (PropertiesLoader.class) {
 				instance = new PropertiesLoader();
@@ -70,5 +70,4 @@ public class PropertiesLoader {
 		}
 		return instance;
 	}
-
 }
