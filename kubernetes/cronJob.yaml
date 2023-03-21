@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: interop-be-probing-eservice-registry-reader
+  labels:
+    app: interop-be-probing-eservice-registry-reader
+spec:
+  schedule: "0 18 * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 5
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            app: interop-be-probing-eservice-registry-reader
+        spec:
+          serviceAccountName: interop-be-probing-eservice-registry-reader
+          containers:
+            - name: interop-be-probing-eservice-registry-reader
+              image: ghcr.io/pagopa/interop-be-probing-eservice-registry-reader:develop
+              imagePullPolicy: Always
+              env:
+                - name: S3_BUCKET_NAME
+                  valueFrom:
+                    configMapKeyRef:
+                      name: interop-be-probing-eservice-registry-reader
+                      key: S3_BUCKET_NAME
+                - name: S3_BUCKET_KEY
+                  valueFrom:
+                    configMapKeyRef:
+                      name: interop-be-probing-eservice-registry-reader
+                      key: S3_BUCKET_KEY
+                - name: SQS_ENDPOINT_SERVICES_QUEUE
+                  valueFrom:
+                    configMapKeyRef:
+                      name: interop-be-probing-eservice-registry-reader
+                      key: SQS_ENDPOINT_SERVICES_QUEUE
+          restartPolicy: Never
