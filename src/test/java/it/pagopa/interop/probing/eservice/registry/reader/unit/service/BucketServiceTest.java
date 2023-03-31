@@ -41,15 +41,10 @@ class BucketServiceTest {
 	@BeforeEach
 	void setup() {
 		listEservices = new ArrayList<>();
-		EserviceDTO eServiceDTO = new EserviceDTO();
-		eServiceDTO.setEserviceId(UUID.randomUUID().toString());
-		eServiceDTO.setVersionId(UUID.randomUUID().toString());
-		eServiceDTO.setName("Service Name");
-		eServiceDTO.setProducerName("Producer Name");
-		eServiceDTO.setState("ACTIVE");
-		eServiceDTO.setTechnology("REST");
 		String[] basePath = { "xxx.xxx/xxx", "yyy.yyy/xxx" };
-		eServiceDTO.setBasePath(basePath);
+		EserviceDTO eServiceDTO = EserviceDTO.builder().eserviceId(UUID.randomUUID().toString())
+				.versionId(UUID.randomUUID().toString()).name("Service Name").producerName("Producer Name")
+				.state("ACTIVE").technology("REST").basePath(basePath).versionNumber("1").build();
 		listEservices.add(eServiceDTO);
 	}
 
