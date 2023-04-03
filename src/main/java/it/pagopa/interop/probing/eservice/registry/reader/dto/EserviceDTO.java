@@ -22,12 +22,8 @@ import javax.validation.constraints.*;
 import it.pagopa.interop.probing.eservice.registry.reader.annotations.ValidateStringArraySize;
 import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceState;
 import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceTechnology;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
+import lombok.*;
+import lombok.extern.jackson.Jacksonized;
 import java.util.UUID;
 
 /**
@@ -47,9 +43,10 @@ import java.util.UUID;
 /**
  * Instantiates a new eservice DTO.
  */
-@NoArgsConstructor
 @EqualsAndHashCode
 @ToString
+@Builder
+@Jacksonized
 public class EserviceDTO {
 
 	/** The name. */

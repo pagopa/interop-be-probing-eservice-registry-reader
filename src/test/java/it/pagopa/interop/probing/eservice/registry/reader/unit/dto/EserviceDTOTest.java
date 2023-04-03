@@ -22,16 +22,16 @@ class EserviceDTOTest {
 
 	@BeforeEach
 	void setup() {
-		eServiceDTO = new EserviceDTO();
-		eServiceDTO.setEserviceId(UUID.fromString("0b37ac73-cbd8-47f1-a14c-19bcc8f8f8e7"));
-		eServiceDTO.setVersionId(UUID.fromString("226574b8-82a1-4844-9484-55fffc9c15ef"));
-		eServiceDTO.setName("Service Name");
-		eServiceDTO.setProducerName("Producer Name");
-		eServiceDTO.setState(EserviceState.ACTIVE);
-		eServiceDTO.setTechnology(EserviceTechnology.REST);
 		String[] basePath = { "basePath1", "basePath2" };
-		eServiceDTO.setBasePath(basePath);
-
+		eServiceDTO = EserviceDTO.builder()
+				.eserviceId(UUID.fromString("0b37ac73-cbd8-47f1-a14c-19bcc8f8f8e7"))
+				.versionId(UUID.fromString("226574b8-82a1-4844-9484-55fffc9c15ef"))
+				.name("Service Name")
+				.producerName("Producer Name")
+				.state(EserviceState.ACTIVE)
+				.technology(EserviceTechnology.REST)
+				.basePath(basePath)
+				.build();
 	}
 
 	@Test
@@ -44,15 +44,16 @@ class EserviceDTOTest {
 	@Test
 	@DisplayName("Test the utility Equals and HashCode of lombok.")
 	void testEqualsHashCode_whenGivenValidEServiceDto_thenValidEquals() throws IOException {
-		EserviceDTO copy = new EserviceDTO();
-		copy.setEserviceId(UUID.fromString("0b37ac73-cbd8-47f1-a14c-19bcc8f8f8e7"));
-		copy.setVersionId(UUID.fromString("226574b8-82a1-4844-9484-55fffc9c15ef"));
-		copy.setName("Service Name");
-		copy.setProducerName("Producer Name");
-		copy.setState(EserviceState.ACTIVE);
-		copy.setTechnology(EserviceTechnology.REST);
 		String[] basePath = { "basePath1", "basePath2" };
-		copy.setBasePath(basePath);
+		EserviceDTO copy = EserviceDTO.builder()
+				.eserviceId(UUID.fromString("0b37ac73-cbd8-47f1-a14c-19bcc8f8f8e7"))
+				.versionId(UUID.fromString("226574b8-82a1-4844-9484-55fffc9c15ef"))
+				.name("Service Name")
+				.producerName("Producer Name")
+				.state(EserviceState.ACTIVE)
+				.technology(EserviceTechnology.REST)
+				.basePath(basePath)
+				.build();
 		assertEquals(true, eServiceDTO.equals(copy));
 		assertEquals(true, eServiceDTO.hashCode() == copy.hashCode());
 	}

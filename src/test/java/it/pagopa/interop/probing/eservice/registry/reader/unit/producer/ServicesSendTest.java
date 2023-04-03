@@ -43,16 +43,16 @@ class ServicesSendTest {
 
 	@BeforeEach
 	void setup() {
-		eServiceDTO = new EserviceDTO();
-		eServiceDTO.setEserviceId(UUID.randomUUID());
-		eServiceDTO.setVersionId(UUID.randomUUID());
-		eServiceDTO.setName("Service Name");
-		eServiceDTO.setProducerName("Producer Name");
-		eServiceDTO.setState(EserviceState.ACTIVE);
-		eServiceDTO.setTechnology(EserviceTechnology.REST);
 		String[] basePath = { "basePath1", "basePath2" };
-		eServiceDTO.setBasePath(basePath);
-
+		eServiceDTO = EserviceDTO.builder()
+				.eserviceId(UUID.randomUUID())
+				.versionId(UUID.randomUUID())
+				.name("Service Name")
+				.producerName("Producer Name")
+				.state(EserviceState.ACTIVE)
+				.technology(EserviceTechnology.REST)
+				.basePath(basePath)
+				.build();
 	}
 
 	@Test
