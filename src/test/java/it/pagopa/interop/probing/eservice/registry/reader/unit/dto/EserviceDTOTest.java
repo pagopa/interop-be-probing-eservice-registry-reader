@@ -3,7 +3,10 @@ package it.pagopa.interop.probing.eservice.registry.reader.unit.dto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
+import java.util.UUID;
 
+import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceState;
+import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceTechnology;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,12 +23,12 @@ class EserviceDTOTest {
 	@BeforeEach
 	void setup() {
 		eServiceDTO = new EserviceDTO();
-		eServiceDTO.setEserviceId("0b37ac73-cbd8-47f1-a14c-19bcc8f8f8e7");
-		eServiceDTO.setVersionId("226574b8-82a1-4844-9484-55fffc9c15ef");
+		eServiceDTO.setEserviceId(UUID.fromString("0b37ac73-cbd8-47f1-a14c-19bcc8f8f8e7"));
+		eServiceDTO.setVersionId(UUID.fromString("226574b8-82a1-4844-9484-55fffc9c15ef"));
 		eServiceDTO.setName("Service Name");
 		eServiceDTO.setProducerName("Producer Name");
-		eServiceDTO.setState("ACTIVE");
-		eServiceDTO.setTechnology("REST");
+		eServiceDTO.setState(EserviceState.ACTIVE);
+		eServiceDTO.setTechnology(EserviceTechnology.REST);
 		String[] basePath = { "basePath1", "basePath2" };
 		eServiceDTO.setBasePath(basePath);
 
@@ -42,12 +45,12 @@ class EserviceDTOTest {
 	@DisplayName("Test the utility Equals and HashCode of lombok.")
 	void testEqualsHashCode_whenGivenValidEServiceDto_thenValidEquals() throws IOException {
 		EserviceDTO copy = new EserviceDTO();
-		copy.setEserviceId("0b37ac73-cbd8-47f1-a14c-19bcc8f8f8e7");
-		copy.setVersionId("226574b8-82a1-4844-9484-55fffc9c15ef");
+		copy.setEserviceId(UUID.fromString("0b37ac73-cbd8-47f1-a14c-19bcc8f8f8e7"));
+		copy.setVersionId(UUID.fromString("226574b8-82a1-4844-9484-55fffc9c15ef"));
 		copy.setName("Service Name");
 		copy.setProducerName("Producer Name");
-		copy.setState("ACTIVE");
-		copy.setTechnology("REST");
+		copy.setState(EserviceState.ACTIVE);
+		copy.setTechnology(EserviceTechnology.REST);
 		String[] basePath = { "basePath1", "basePath2" };
 		copy.setBasePath(basePath);
 		assertEquals(true, eServiceDTO.equals(copy));
