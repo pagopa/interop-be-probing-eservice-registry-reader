@@ -1,21 +1,3 @@
-/**************************************************************************
-*
-* Copyright 2023 (C) DXC
-*
-* Created on  : Mar 13, 2023
-* Author      : dxc technology
-* Project Name: interop-be-probing-eservice-registry-reader 
-* Package     : it.pagopa.interop.probing.eservice.registry.reader.producer
-* File Name   : ServicesSend.java
-*
-*-----------------------------------------------------------------------------
-* Revision History (Release )
-*-----------------------------------------------------------------------------
-* VERSION     DESCRIPTION OF CHANGE
-*-----------------------------------------------------------------------------
-** --/1.0  |  Initial Create.
-**---------|------------------------------------------------------------------
-***************************************************************************/
 package it.pagopa.interop.probing.eservice.registry.reader.producer;
 
 import java.io.IOException;
@@ -29,32 +11,17 @@ import it.pagopa.interop.probing.eservice.registry.reader.config.jacksonmapper.J
 import it.pagopa.interop.probing.eservice.registry.reader.dto.EserviceDTO;
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * The Class ServicesSend.
- */
-
-/** The Constant log. */
 @Slf4j
 public class ServicesSend {
 
-	/** The sqs url services. */
 	private String sqsUrlServices;
 
-	/** The instance. */
 	private static ServicesSend instance;
 
-	/** The Constant SQS_URL. */
 	private static final String SQS_URL = "amazon.sqs.endpoint.services-queue";
 
-	/** The Constant SQS_GROUP_ID. */
 	private static final String SQS_GROUP_ID = "services-group";
 
-	/**
-	 * Gets the single instance of ServicesSend.
-	 *
-	 * @return single instance of ServicesSend
-	 * @throws IOException
-	 */
 	public static ServicesSend getInstance() throws IOException {
 		if (Objects.isNull(instance)) {
 			instance = new ServicesSend();
@@ -62,22 +29,10 @@ public class ServicesSend {
 		return instance;
 	}
 
-	/**
-	 * Instantiates a new services send.
-	 * 
-	 * @throws IOException
-	 */
 	private ServicesSend() throws IOException {
 		this.sqsUrlServices = PropertiesLoader.getInstance().getKey(SQS_URL);
 	}
 
-	/**
-	 * Send a new message to the sqs queue which will be used for the legal fact
-	 * generation.
-	 *
-	 * @param service the service
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
 	public void sendMessage(EserviceDTO service) throws IOException {
 		SendMessageRequest sendMessageRequest = new SendMessageRequest().withQueueUrl(sqsUrlServices)
 				.withMessageGroupId(SQS_GROUP_ID)

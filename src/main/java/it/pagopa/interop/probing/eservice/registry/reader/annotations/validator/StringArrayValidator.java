@@ -1,21 +1,3 @@
-/**************************************************************************
-*
-* Copyright 2023 (C) DXC
-*
-* Created on  : Mar 2, 2023
-* Author      : dxc technology
-* Project Name: interop-be-probing-eservice-registry-reader 
-* Package     : it.pagopa.interop.probing.eservice.registry.reader.annotations.validator
-* File Name   : StringArrayValidator.java
-*
-*-----------------------------------------------------------------------------
-* Revision History (Release )
-*-----------------------------------------------------------------------------
-* VERSION     DESCRIPTION OF CHANGE
-*-----------------------------------------------------------------------------
-** --/1.0  |  Initial Create.
-**---------|------------------------------------------------------------------
-***************************************************************************/
 package it.pagopa.interop.probing.eservice.registry.reader.annotations.validator;
 
 import java.util.Objects;
@@ -25,31 +7,15 @@ import javax.validation.ConstraintValidatorContext;
 
 import it.pagopa.interop.probing.eservice.registry.reader.annotations.ValidateStringArraySize;
 
-/**
- * The Class StringArrayValidator.
- */
 public class StringArrayValidator implements ConstraintValidator<ValidateStringArraySize, String[]> {
 
-	/** The max size. */
 	int maxSize;
 
-	/**
-	 * Initialize.
-	 *
-	 * @param constraintAnnotation the constraint annotation
-	 */
 	@Override
 	public void initialize(ValidateStringArraySize constraintAnnotation) {
 		maxSize = constraintAnnotation.maxSize();
 	}
 
-	/**
-	 * Checks if is valid.
-	 *
-	 * @param array   the array
-	 * @param context the context
-	 * @return true, if is valid
-	 */
 	@Override
 	public boolean isValid(String[] array, ConstraintValidatorContext context) {
 		if (Objects.nonNull(array)) {

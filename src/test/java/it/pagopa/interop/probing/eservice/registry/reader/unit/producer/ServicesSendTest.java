@@ -38,21 +38,17 @@ class ServicesSendTest {
 	private PropertiesLoader propertiesLoader;
 
 	private EserviceDTO eServiceDTO;
-	
+
 	private static final String SQS_GROUP_ID = "services-group";
 
 	@BeforeEach
 	void setup() {
 		String[] basePath = { "basePath1", "basePath2" };
-		eServiceDTO = EserviceDTO.builder()
-				.eserviceId(UUID.randomUUID())
-				.versionId(UUID.randomUUID())
-				.name("Service Name")
-				.producerName("Producer Name")
-				.state(EserviceState.ACTIVE)
-				.technology(EserviceTechnology.REST)
-				.basePath(basePath)
-				.build();
+
+		eServiceDTO = EserviceDTO.builder().eserviceId(UUID.randomUUID()).versionId(UUID.randomUUID())
+				.name("Service Name").producerName("Producer Name").state(EserviceState.ACTIVE)
+				.technology(EserviceTechnology.REST).basePath(basePath).versionNumber("1").build();
+
 	}
 
 	@Test
@@ -69,8 +65,9 @@ class ServicesSendTest {
 			when(amazonSQS.sendMessage(Mockito.any())).thenReturn(null);
 			when(propertiesLoader.getKey(Mockito.any())).thenReturn(url);
 			ServicesSend.getInstance().sendMessage(eServiceDTO);
-			SendMessageRequest sendMessageRequest = new SendMessageRequest().withQueueUrl(url).withMessageGroupId(SQS_GROUP_ID).withMessageBody(
-					JacksonMapperConfig.getInstance().getObjectMapper().writeValueAsString(eServiceDTO));
+			SendMessageRequest sendMessageRequest = new SendMessageRequest().withQueueUrl(url)
+					.withMessageGroupId(SQS_GROUP_ID).withMessageBody(
+							JacksonMapperConfig.getInstance().getObjectMapper().writeValueAsString(eServiceDTO));
 			verify(amazonSQS).sendMessage(sendMessageRequest);
 		}
 	}
