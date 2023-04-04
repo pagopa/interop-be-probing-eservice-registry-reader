@@ -34,7 +34,7 @@ class JacksonMapperConfigTest {
 
 		EserviceDTO eServiceDTO = EserviceDTO.builder().eserviceId(UUID.randomUUID()).versionId(UUID.randomUUID())
 				.name("Service Name").producerName("Producer Name").state(EserviceState.ACTIVE)
-				.technology(EserviceTechnology.REST).basePath(basePath).versionNumber("1").build();
+				.technology(EserviceTechnology.REST).basePath(basePath).versionNumber(1).build();
 
 		listEservices.add(eServiceDTO);
 	}
