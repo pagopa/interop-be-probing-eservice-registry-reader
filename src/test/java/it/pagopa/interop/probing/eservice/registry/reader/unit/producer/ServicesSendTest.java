@@ -7,6 +7,8 @@ import static org.mockito.Mockito.when;
 import java.io.IOException;
 import java.util.UUID;
 
+import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceState;
+import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceTechnology;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,9 +44,11 @@ class ServicesSendTest {
 	@BeforeEach
 	void setup() {
 		String[] basePath = { "basePath1", "basePath2" };
-		eServiceDTO = EserviceDTO.builder().eserviceId(UUID.randomUUID().toString())
-				.versionId(UUID.randomUUID().toString()).name("Service Name").producerName("Producer Name")
-				.state("ACTIVE").technology("REST").basePath(basePath).versionNumber("1").build();
+
+		eServiceDTO = EserviceDTO.builder().eserviceId(UUID.randomUUID()).versionId(UUID.randomUUID())
+				.name("Service Name").producerName("Producer Name").state(EserviceState.ACTIVE)
+				.technology(EserviceTechnology.REST).basePath(basePath).versionNumber("1").build();
+
 	}
 
 	@Test

@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceState;
+import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceTechnology;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,9 +44,10 @@ class BucketServiceTest {
 	void setup() {
 		listEservices = new ArrayList<>();
 		String[] basePath = { "xxx.xxx/xxx", "yyy.yyy/xxx" };
-		EserviceDTO eServiceDTO = EserviceDTO.builder().eserviceId(UUID.randomUUID().toString())
-				.versionId(UUID.randomUUID().toString()).name("Service Name").producerName("Producer Name")
-				.state("ACTIVE").technology("REST").basePath(basePath).versionNumber("1").build();
+		EserviceDTO eServiceDTO = EserviceDTO.builder().eserviceId(UUID.randomUUID()).versionId(UUID.randomUUID())
+				.name("Service Name").producerName("Producer Name").state(EserviceState.ACTIVE)
+				.technology(EserviceTechnology.REST).basePath(basePath).versionNumber("1").build();
+
 		listEservices.add(eServiceDTO);
 	}
 
