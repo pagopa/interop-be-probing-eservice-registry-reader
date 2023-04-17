@@ -14,31 +14,32 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ServicesSend {
 
-	private String sqsUrlServices;
+  private String sqsUrlServices;
 
-	private static ServicesSend instance;
+  private static ServicesSend instance;
 
-	private static final String SQS_URL = "amazon.sqs.endpoint.services-queue";
+  private static final String SQS_URL = "amazon.sqs.endpoint.services-queue";
 
-	private static final String SQS_GROUP_ID = "services-group";
+  private static final String SQS_GROUP_ID = "services-group";
 
-	public static ServicesSend getInstance() throws IOException {
-		if (Objects.isNull(instance)) {
-			instance = new ServicesSend();
-		}
-		return instance;
-	}
+  public static ServicesSend getInstance() throws IOException {
+    if (Objects.isNull(instance)) {
+      instance = new ServicesSend();
+    }
+    return instance;
+  }
 
-	private ServicesSend() throws IOException {
-		this.sqsUrlServices = PropertiesLoader.getInstance().getKey(SQS_URL);
-	}
+  private ServicesSend() throws IOException {
+    this.sqsUrlServices = PropertiesLoader.getInstance().getKey(SQS_URL);
+  }
 
-	public void sendMessage(EserviceDTO service) throws IOException {
-		SendMessageRequest sendMessageRequest = new SendMessageRequest().withQueueUrl(sqsUrlServices)
-				.withMessageGroupId(SQS_GROUP_ID)
-				.withMessageBody(JacksonMapperConfig.getInstance().getObjectMapper().writeValueAsString(service));
-		SqsConfig.getInstance().getAmazonSQSAsync().sendMessage(sendMessageRequest);
-		log.info("Service " + service.getEserviceId() + " with version " + service.getVersionId()
-				+ " has been published in SQS.");
-	}
+  public void sendMessage(EserviceDTO service) throws IOException {
+    SendMessageRequest sendMessageRequest =
+        new SendMessageRequest().withQueueUrl(sqsUrlServices).withMessageGroupId(SQS_GROUP_ID)
+            .withMessageBody(
+                JacksonMapperConfig.getInstance().getObjectMapper().writeValueAsString(service));
+    SqsConfig.getInstance().getAmazonSQSAsync().sendMessage(sendMessageRequest);
+    log.info("Service {} with version {} has been pushed in SQS", service.getEserviceId(),
+        service.getVersionId());
+  }
 }
