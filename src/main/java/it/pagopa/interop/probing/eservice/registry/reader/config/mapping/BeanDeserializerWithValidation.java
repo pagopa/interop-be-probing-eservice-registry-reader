@@ -1,4 +1,4 @@
-package it.pagopa.interop.probing.eservice.registry.reader.config.jacksonmapper;
+package it.pagopa.interop.probing.eservice.registry.reader.config.mapping;
 
 import java.io.IOException;
 import java.util.Set;

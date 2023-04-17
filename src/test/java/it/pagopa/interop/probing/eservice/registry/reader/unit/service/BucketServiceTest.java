@@ -26,7 +26,7 @@ import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 
 import it.pagopa.interop.probing.eservice.registry.reader.config.aws.s3.BucketConfig;
-import it.pagopa.interop.probing.eservice.registry.reader.config.jacksonmapper.JacksonMapperConfig;
+import it.pagopa.interop.probing.eservice.registry.reader.config.mapping.mapper.JacksonMapperConfig;
 import it.pagopa.interop.probing.eservice.registry.reader.dto.EserviceDTO;
 import it.pagopa.interop.probing.eservice.registry.reader.service.BucketService;
 

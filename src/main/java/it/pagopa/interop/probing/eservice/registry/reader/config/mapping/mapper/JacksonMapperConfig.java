@@ -1,10 +1,11 @@
-package it.pagopa.interop.probing.eservice.registry.reader.config.jacksonmapper;
+package it.pagopa.interop.probing.eservice.registry.reader.config.mapping.mapper;
 
 import java.util.Objects;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import it.pagopa.interop.probing.eservice.registry.reader.config.mapping.BeanDeserializerModifierWithValidation;
 
 public class JacksonMapperConfig {
 
