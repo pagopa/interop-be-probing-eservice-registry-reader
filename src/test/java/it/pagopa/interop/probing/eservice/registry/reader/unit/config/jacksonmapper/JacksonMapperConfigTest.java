@@ -19,8 +19,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
-import it.pagopa.interop.probing.eservice.registry.reader.config.jacksonmapper.BeanDeserializerModifierWithValidation;
-import it.pagopa.interop.probing.eservice.registry.reader.config.jacksonmapper.JacksonMapperConfig;
+import it.pagopa.interop.probing.eservice.registry.reader.config.mapping.BeanDeserializerModifierWithValidation;
+import it.pagopa.interop.probing.eservice.registry.reader.config.mapping.mapper.JacksonMapperConfig;
 import it.pagopa.interop.probing.eservice.registry.reader.dto.EserviceDTO;
 
 class JacksonMapperConfigTest {

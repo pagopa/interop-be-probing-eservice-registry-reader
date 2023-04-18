@@ -10,7 +10,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 
 import it.pagopa.interop.probing.eservice.registry.reader.config.PropertiesLoader;
 import it.pagopa.interop.probing.eservice.registry.reader.config.aws.s3.BucketConfig;
-import it.pagopa.interop.probing.eservice.registry.reader.config.jacksonmapper.JacksonMapperConfig;
+import it.pagopa.interop.probing.eservice.registry.reader.config.mapping.mapper.JacksonMapperConfig;
 import it.pagopa.interop.probing.eservice.registry.reader.dto.EserviceDTO;
 
 public class BucketService {

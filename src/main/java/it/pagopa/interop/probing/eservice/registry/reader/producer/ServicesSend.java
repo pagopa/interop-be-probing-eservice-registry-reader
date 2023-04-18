@@ -7,7 +7,7 @@ import com.amazonaws.services.sqs.model.SendMessageRequest;
 
 import it.pagopa.interop.probing.eservice.registry.reader.config.PropertiesLoader;
 import it.pagopa.interop.probing.eservice.registry.reader.config.aws.sqs.SqsConfig;
-import it.pagopa.interop.probing.eservice.registry.reader.config.jacksonmapper.JacksonMapperConfig;
+import it.pagopa.interop.probing.eservice.registry.reader.config.mapping.mapper.JacksonMapperConfig;
 import it.pagopa.interop.probing.eservice.registry.reader.dto.EserviceDTO;
 import lombok.extern.slf4j.Slf4j;
 

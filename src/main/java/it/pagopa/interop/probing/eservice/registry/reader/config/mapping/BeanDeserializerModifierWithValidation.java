@@ -1,4 +1,4 @@
-package it.pagopa.interop.probing.eservice.registry.reader.config.jacksonmapper;
+package it.pagopa.interop.probing.eservice.registry.reader.config.mapping;
 
 import com.fasterxml.jackson.databind.BeanDescription;
 import com.fasterxml.jackson.databind.DeserializationConfig;
