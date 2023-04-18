@@ -1,6 +1,7 @@
 package it.pagopa.interop.probing.eservice.registry.reader.producer;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.Objects;
 
 import com.amazonaws.services.sqs.model.SendMessageRequest;
@@ -42,6 +43,6 @@ public class ServicesSend {
                 JacksonMapperConfig.getInstance().getObjectMapper().writeValueAsString(service));
     SqsConfig.getInstance().getAmazonSQSAsync().sendMessage(sendMessageRequest);
     logger.logMessagePushedToQueue(service.getEserviceId(), service.getVersionId(),
-        sqsUrlServices, SQS_GROUP_ID);
+        URI.create(sqsUrlServices), SQS_GROUP_ID);
   }
 }
