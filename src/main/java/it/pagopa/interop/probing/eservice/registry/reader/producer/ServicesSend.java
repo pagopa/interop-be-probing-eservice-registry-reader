@@ -9,12 +9,13 @@ import it.pagopa.interop.probing.eservice.registry.reader.config.PropertiesLoade
 import it.pagopa.interop.probing.eservice.registry.reader.config.aws.sqs.SqsConfig;
 import it.pagopa.interop.probing.eservice.registry.reader.config.jacksonmapper.JacksonMapperConfig;
 import it.pagopa.interop.probing.eservice.registry.reader.dto.EserviceDTO;
-import it.pagopa.interop.probing.eservice.registry.reader.util.logging.LoggingMessages;
-import lombok.extern.slf4j.Slf4j;
+import it.pagopa.interop.probing.eservice.registry.reader.util.logging.Logger;
+import it.pagopa.interop.probing.eservice.registry.reader.util.logging.impl.LoggerImpl;
 
-@Slf4j
+
 public class ServicesSend {
 
+  private final Logger logger = new LoggerImpl();
   private String sqsUrlServices;
 
   private static ServicesSend instance;
@@ -40,7 +41,7 @@ public class ServicesSend {
             .withMessageBody(
                 JacksonMapperConfig.getInstance().getObjectMapper().writeValueAsString(service));
     SqsConfig.getInstance().getAmazonSQSAsync().sendMessage(sendMessageRequest);
-    log.info(LoggingMessages.ESERVICE_PUSHED, service.getEserviceId(), service.getVersionId(),
+    logger.logMessagePushedToQueue(service.getEserviceId(), service.getVersionId(),
         sqsUrlServices, SQS_GROUP_ID);
   }
 }
