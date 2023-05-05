@@ -7,18 +7,18 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 public class StringArrayValidator implements
-		ConstraintValidator<ValidateStringArraySize, String[]> {
+    ConstraintValidator<ValidateStringArraySize, String[]> {
 
-	int maxSize;
+  int maxSize;
 
-	@Override
-	public void initialize(ValidateStringArraySize constraintAnnotation) {
-		maxSize = constraintAnnotation.maxSize();
-	}
+  @Override
+  public void initialize(ValidateStringArraySize constraintAnnotation) {
+    maxSize = constraintAnnotation.maxSize();
+  }
 
-	@Override
-	public boolean isValid(String[] array, ConstraintValidatorContext context) {
-		return Objects.nonNull(array) && Stream.of(array).noneMatch(s -> s.length() > maxSize);
-	}
+  @Override
+  public boolean isValid(String[] array, ConstraintValidatorContext context) {
+    return Objects.isNull(array) || Stream.of(array).noneMatch(s -> s.length() > maxSize);
+  }
 
 }
