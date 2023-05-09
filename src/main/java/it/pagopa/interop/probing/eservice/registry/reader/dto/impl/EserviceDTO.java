@@ -1,6 +1,7 @@
-package it.pagopa.interop.probing.eservice.registry.reader.dto;
+package it.pagopa.interop.probing.eservice.registry.reader.dto.impl;
 
 import it.pagopa.interop.probing.eservice.registry.reader.annotations.ValidateStringArraySize;
+import it.pagopa.interop.probing.eservice.registry.reader.dto.Dto;
 import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceState;
 import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceTechnology;
 import java.util.UUID;
@@ -24,7 +25,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 @Builder
-public class EserviceDTO {
+public class EserviceDTO implements Dto {
 
   @NotBlank(message = "must not be blank")
   @Size(max = 255, message = "must not be longer than 255 chars")
