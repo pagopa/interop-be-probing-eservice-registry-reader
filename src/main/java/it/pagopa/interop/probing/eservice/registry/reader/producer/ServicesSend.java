@@ -1,15 +1,15 @@
 package it.pagopa.interop.probing.eservice.registry.reader.producer;
 
-import java.io.IOException;
-import java.net.URI;
-import java.util.Objects;
 import com.amazonaws.services.sqs.model.SendMessageRequest;
 import it.pagopa.interop.probing.eservice.registry.reader.config.PropertiesLoader;
 import it.pagopa.interop.probing.eservice.registry.reader.config.aws.sqs.SqsConfig;
 import it.pagopa.interop.probing.eservice.registry.reader.config.mapping.mapper.JacksonMapperConfig;
-import it.pagopa.interop.probing.eservice.registry.reader.dto.EserviceDTO;
+import it.pagopa.interop.probing.eservice.registry.reader.dto.impl.EserviceDTO;
 import it.pagopa.interop.probing.eservice.registry.reader.util.logging.Logger;
 import it.pagopa.interop.probing.eservice.registry.reader.util.logging.impl.LoggerImpl;
+import java.io.IOException;
+import java.net.URI;
+import java.util.Objects;
 
 
 public class ServicesSend {
