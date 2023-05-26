@@ -21,11 +21,14 @@ import it.pagopa.interop.probing.eservice.registry.reader.dto.impl.EserviceDTO;
 import it.pagopa.interop.probing.eservice.registry.reader.producer.ServicesSend;
 import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceState;
 import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceTechnology;
+import it.pagopa.interop.probing.eservice.registry.reader.util.logging.Logger;
 
 @ExtendWith(MockitoExtension.class)
 class ServicesSendTest {
 
   private ServicesSend servicesSend;
+
+  private Logger loggerMock = mock(Logger.class);
 
   private AmazonSQSAsync sqsMock = mock(AmazonSQSAsync.class);
 
@@ -48,6 +51,7 @@ class ServicesSendTest {
       protected void configure() {
         bind(AmazonSQSAsync.class).toInstance(sqsMock);
         bind(ObjectMapper.class).toInstance(mapperMock);
+        bind(Logger.class).toInstance(loggerMock);
         bind(String.class).annotatedWith(Names.named("amazon.sqs.endpoint.services-queue"))
             .toInstance("http://queue/test-queue");
       }
