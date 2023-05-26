@@ -1,15 +1,15 @@
 package it.pagopa.interop.probing.eservice.registry.reader.dto.impl;
 
-import it.pagopa.interop.probing.eservice.registry.reader.annotations.ValidateStringArraySize;
-import it.pagopa.interop.probing.eservice.registry.reader.dto.Dto;
-import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceState;
-import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceTechnology;
 import java.util.UUID;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import it.pagopa.interop.probing.eservice.registry.reader.annotations.ValidateStringArraySize;
+import it.pagopa.interop.probing.eservice.registry.reader.dto.Dto;
+import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceState;
+import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceTechnology;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -54,5 +54,9 @@ public class EserviceDTO implements Dto {
   @NotNull(message = "must not be null")
   @Min(value = 1, message = "must be at least 1")
   private Integer versionNumber;
+
+  @NotEmpty(message = "list cannot be empty")
+  @ValidateStringArraySize(maxSize = 2048)
+  private String[] audience;
 
 }

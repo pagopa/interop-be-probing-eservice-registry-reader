@@ -3,16 +3,6 @@ package it.pagopa.interop.probing.eservice.registry.reader.unit.producer;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import com.amazonaws.services.sqs.AmazonSQSAsync;
-import com.amazonaws.services.sqs.model.SendMessageRequest;
-import it.pagopa.interop.probing.eservice.registry.reader.config.PropertiesLoader;
-import it.pagopa.interop.probing.eservice.registry.reader.config.aws.sqs.SqsConfig;
-import it.pagopa.interop.probing.eservice.registry.reader.config.mapping.mapper.JacksonMapperConfig;
-import it.pagopa.interop.probing.eservice.registry.reader.dto.impl.EserviceDTO;
-import it.pagopa.interop.probing.eservice.registry.reader.producer.ServicesSend;
-import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceState;
-import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceTechnology;
 import java.io.IOException;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,6 +13,15 @@ import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import com.amazonaws.services.sqs.AmazonSQSAsync;
+import com.amazonaws.services.sqs.model.SendMessageRequest;
+import it.pagopa.interop.probing.eservice.registry.reader.config.PropertiesLoader;
+import it.pagopa.interop.probing.eservice.registry.reader.config.aws.sqs.SqsConfig;
+import it.pagopa.interop.probing.eservice.registry.reader.config.mapping.mapper.JacksonMapperConfig;
+import it.pagopa.interop.probing.eservice.registry.reader.dto.impl.EserviceDTO;
+import it.pagopa.interop.probing.eservice.registry.reader.producer.ServicesSend;
+import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceState;
+import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceTechnology;
 
 @ExtendWith(MockitoExtension.class)
 class ServicesSendTest {
@@ -41,10 +40,12 @@ class ServicesSendTest {
   @BeforeEach
   void setup() {
     String[] basePath = {"basePath1", "basePath2"};
+    String[] audience = {"audience1", "audience2"};
 
     eServiceDTO = EserviceDTO.builder().eserviceId(UUID.randomUUID()).versionId(UUID.randomUUID())
         .name("Service Name").producerName("Producer Name").state(EserviceState.ACTIVE)
-        .technology(EserviceTechnology.REST).basePath(basePath).versionNumber(1).build();
+        .technology(EserviceTechnology.REST).basePath(basePath).audience(audience).versionNumber(1)
+        .build();
 
   }
 

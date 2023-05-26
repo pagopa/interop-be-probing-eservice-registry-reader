@@ -3,16 +3,6 @@ package it.pagopa.interop.probing.eservice.registry.reader.unit.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mockStatic;
-
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.GetObjectRequest;
-import com.amazonaws.services.s3.model.S3Object;
-import it.pagopa.interop.probing.eservice.registry.reader.config.aws.s3.BucketConfig;
-import it.pagopa.interop.probing.eservice.registry.reader.config.mapping.mapper.JacksonMapperConfig;
-import it.pagopa.interop.probing.eservice.registry.reader.dto.impl.EserviceDTO;
-import it.pagopa.interop.probing.eservice.registry.reader.service.BucketService;
-import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceState;
-import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceTechnology;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -26,6 +16,15 @@ import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.GetObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
+import it.pagopa.interop.probing.eservice.registry.reader.config.aws.s3.BucketConfig;
+import it.pagopa.interop.probing.eservice.registry.reader.config.mapping.mapper.JacksonMapperConfig;
+import it.pagopa.interop.probing.eservice.registry.reader.dto.impl.EserviceDTO;
+import it.pagopa.interop.probing.eservice.registry.reader.service.BucketService;
+import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceState;
+import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceTechnology;
 
 @ExtendWith(MockitoExtension.class)
 class BucketServiceTest {
@@ -41,10 +40,11 @@ class BucketServiceTest {
   void setup() {
     listEservices = new ArrayList<>();
     String[] basePath = {"xxx.xxx/xxx", "yyy.yyy/xxx"};
+    String[] audience = {"xxx.xxx/xxx", "yyy.yyy/xxx"};
     EserviceDTO eServiceDTO = EserviceDTO.builder().eserviceId(UUID.randomUUID())
-        .versionId(UUID.randomUUID())
-        .name("Service Name").producerName("Producer Name").state(EserviceState.ACTIVE)
-        .technology(EserviceTechnology.REST).basePath(basePath).versionNumber(1).build();
+        .versionId(UUID.randomUUID()).name("Service Name").producerName("Producer Name")
+        .state(EserviceState.ACTIVE).technology(EserviceTechnology.REST).basePath(basePath)
+        .audience(audience).versionNumber(1).build();
 
     listEservices.add(eServiceDTO);
   }
@@ -52,8 +52,8 @@ class BucketServiceTest {
   @Test
   @DisplayName("readObject method is executed")
   void testReadObject_whenGivenValidS3Object_thenReturnValidObjectList() throws Exception {
-    String stringList = JacksonMapperConfig.getInstance().getObjectMapper()
-        .writeValueAsString(listEservices);
+    String stringList =
+        JacksonMapperConfig.getInstance().getObjectMapper().writeValueAsString(listEservices);
     S3Object s3Object = new S3Object();
     s3Object.setBucketName("bucket-name-test");
     s3Object.setKey("bucket-key-test");
