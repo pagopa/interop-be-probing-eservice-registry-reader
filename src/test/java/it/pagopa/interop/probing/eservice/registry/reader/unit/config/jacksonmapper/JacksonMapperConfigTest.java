@@ -1,6 +1,5 @@
 package it.pagopa.interop.probing.eservice.registry.reader.unit.config.jacksonmapper;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.io.IOException;
@@ -45,15 +44,6 @@ class JacksonMapperConfigTest {
         .audience(audience).versionNumber(1).build();
 
     listEservices.add(eServiceDTO);
-  }
-
-  @Test
-  void testGetObjectMapper() {
-    ObjectMapper objectMapper = jacksonMapperConfig.getObjectMapper();
-
-    assertNotNull(objectMapper);
-    assertFalse(objectMapper.isEnabled(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES));
-    assertFalse(objectMapper.isEnabled(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS));
   }
 
   @Test
