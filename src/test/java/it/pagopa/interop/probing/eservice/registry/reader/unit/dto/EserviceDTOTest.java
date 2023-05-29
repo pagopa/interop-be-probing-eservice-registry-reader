@@ -28,7 +28,6 @@ class EserviceDTOTest {
             .producerName("Producer Name").state(EserviceState.ACTIVE)
             .technology(EserviceTechnology.REST).basePath(basePath).audience(audience)
             .versionNumber(1).build();
-
   }
 
   @Test
@@ -36,6 +35,7 @@ class EserviceDTOTest {
   void testToString_whenGivenValidEServiceDto_thenValidEquals() throws IOException {
     String serviceString =
         "EserviceDTO(name=Service Name, eserviceId=0b37ac73-cbd8-47f1-a14c-19bcc8f8f8e7, versionId=226574b8-82a1-4844-9484-55fffc9c15ef, technology=REST, state=ACTIVE, basePath=[basePath1, basePath2], producerName=Producer Name, versionNumber=1, audience=[audience1, audience2])";
+
     assertEquals(eServiceDTO.toString(), serviceString);
   }
 

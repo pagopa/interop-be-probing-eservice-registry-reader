@@ -12,7 +12,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import it.pagopa.interop.probing.eservice.registry.reader.config.mapping.BeanDeserializerModifierWithValidation;
 import it.pagopa.interop.probing.eservice.registry.reader.config.mapping.mapper.JacksonMapperConfig;
 import it.pagopa.interop.probing.eservice.registry.reader.dto.impl.EserviceDTO;
@@ -23,8 +26,14 @@ class JacksonMapperConfigTest {
 
   private List<EserviceDTO> listEservices;
 
+  private Injector injector;
+  private JacksonMapperConfig jacksonMapperConfig;
+
   @BeforeEach
   void setup() {
+    injector = Guice.createInjector(new JacksonMapperConfig());
+    jacksonMapperConfig = injector.getInstance(JacksonMapperConfig.class);
+
     listEservices = new ArrayList<>();
     String[] basePath = {"xxx.xxx/xxx", "yyy.yyy/xxx"};
     String[] audience = {"xxx.xxx/xxx", "yyy.yyy/xxx"};
@@ -32,7 +41,7 @@ class JacksonMapperConfigTest {
     EserviceDTO eServiceDTO = EserviceDTO.builder().eserviceId(UUID.randomUUID())
         .versionId(UUID.randomUUID()).name("Service Name").producerName("Producer Name")
         .state(EserviceState.ACTIVE).technology(EserviceTechnology.REST).basePath(basePath)
-        .versionNumber(1).audience(audience).build();
+        .audience(audience).versionNumber(1).build();
 
     listEservices.add(eServiceDTO);
   }
@@ -40,25 +49,23 @@ class JacksonMapperConfigTest {
   @Test
   @DisplayName("Test JacksonMapper mapper build")
   void testGetObjectMapper_thenReturnValidObjectMapper() throws IOException {
-    ObjectMapper mapper = JacksonMapperConfig.getInstance().getObjectMapper();
-    assertNotNull(mapper);
-    Assertions.assertFalse(mapper.isEnabled(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES));
+    ObjectMapper objectMapper = jacksonMapperConfig.getObjectMapper();
+    assertNotNull(objectMapper);
+    Assertions
+        .assertFalse(objectMapper.isEnabled(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES));
+    Assertions.assertFalse(objectMapper.isEnabled(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS));
   }
 
   @Test
   @DisplayName("Validate Jackson read object")
   void testValidateJacksonReadObject_whenValidObject_thenReturnValidObjectList() throws Exception {
-    JacksonMapperConfig.getInstance().getObjectMapper()
-        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    ObjectMapper objectMapper = jacksonMapperConfig.getObjectMapper();
+    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     SimpleModule validationModule = new SimpleModule();
     validationModule.setDeserializerModifier(new BeanDeserializerModifierWithValidation());
-    JacksonMapperConfig.getInstance().getObjectMapper().registerModule(validationModule);
-
-    String stringDto = JacksonMapperConfig.getInstance().getObjectMapper()
-        .writeValueAsString(listEservices.get(0));
-
-    EserviceDTO resultMap =
-        JacksonMapperConfig.getInstance().getObjectMapper().readValue(stringDto, EserviceDTO.class);
+    objectMapper.registerModule(validationModule);
+    String stringDto = objectMapper.writeValueAsString(listEservices.get(0));
+    EserviceDTO resultMap = objectMapper.readValue(stringDto, EserviceDTO.class);
     assertEquals(listEservices.get(0).getEserviceId(), resultMap.getEserviceId());
   }
 }

@@ -1,41 +1,40 @@
 package it.pagopa.interop.probing.eservice.registry.reader.unit.producer;
 
-import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import java.io.IOException;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import com.amazonaws.services.sqs.AmazonSQSAsync;
 import com.amazonaws.services.sqs.model.SendMessageRequest;
-import it.pagopa.interop.probing.eservice.registry.reader.config.PropertiesLoader;
-import it.pagopa.interop.probing.eservice.registry.reader.config.aws.sqs.SqsConfig;
-import it.pagopa.interop.probing.eservice.registry.reader.config.mapping.mapper.JacksonMapperConfig;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.name.Names;
 import it.pagopa.interop.probing.eservice.registry.reader.dto.impl.EserviceDTO;
 import it.pagopa.interop.probing.eservice.registry.reader.producer.ServicesSend;
 import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceState;
 import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceTechnology;
+import it.pagopa.interop.probing.eservice.registry.reader.util.logging.Logger;
 
 @ExtendWith(MockitoExtension.class)
 class ServicesSendTest {
 
-  @Mock
-  private SqsConfig sqs;
-  @Mock
-  private AmazonSQSAsync amazonSQS;
-  @Mock
-  private PropertiesLoader propertiesLoader;
+  private ServicesSend servicesSend;
+
+  private Logger loggerMock = mock(Logger.class);
+
+  private AmazonSQSAsync sqsMock = mock(AmazonSQSAsync.class);
+
+  private ObjectMapper mapperMock = mock(ObjectMapper.class);
 
   private EserviceDTO eServiceDTO;
-
-  private static final String SQS_GROUP_ID = "services-group";
 
   @BeforeEach
   void setup() {
@@ -47,26 +46,28 @@ class ServicesSendTest {
         .technology(EserviceTechnology.REST).basePath(basePath).audience(audience).versionNumber(1)
         .build();
 
+    Injector injector = Guice.createInjector(new AbstractModule() {
+      @Override
+      protected void configure() {
+        bind(AmazonSQSAsync.class).toInstance(sqsMock);
+        bind(ObjectMapper.class).toInstance(mapperMock);
+        bind(Logger.class).toInstance(loggerMock);
+        bind(String.class).annotatedWith(Names.named("amazon.sqs.endpoint.services-queue"))
+            .toInstance("http://queue/test-queue");
+      }
+    });
+    servicesSend = injector.getInstance(ServicesSend.class);
   }
 
   @Test
   @DisplayName("The sendMessage method of ServicesSend class is tested.")
   void testSendMessage_whenGivenValidEServiceAndUrl_thenProducerWriteOnQueue() throws IOException {
 
-    String url = "http://queue/test-queue";
+    Mockito.when(mapperMock.writeValueAsString(eServiceDTO)).thenReturn(eServiceDTO.toString());
 
-    try (MockedStatic<SqsConfig> cacheManagerMock = mockStatic(SqsConfig.class);
-        MockedStatic<PropertiesLoader> propertiesManagerMock = mockStatic(PropertiesLoader.class)) {
-      cacheManagerMock.when(SqsConfig::getInstance).thenReturn(sqs);
-      propertiesManagerMock.when(PropertiesLoader::getInstance).thenReturn(propertiesLoader);
-      when(sqs.getAmazonSQSAsync()).thenReturn(amazonSQS);
-      when(amazonSQS.sendMessage(Mockito.any())).thenReturn(null);
-      when(propertiesLoader.getKey(Mockito.any())).thenReturn(url);
-      ServicesSend.getInstance().sendMessage(eServiceDTO);
-      SendMessageRequest sendMessageRequest = new SendMessageRequest().withQueueUrl(url)
-          .withMessageGroupId(SQS_GROUP_ID).withMessageBody(
-              JacksonMapperConfig.getInstance().getObjectMapper().writeValueAsString(eServiceDTO));
-      verify(amazonSQS).sendMessage(sendMessageRequest);
-    }
+    servicesSend.sendMessage(eServiceDTO);
+
+    verify(sqsMock).sendMessage(Mockito.any(SendMessageRequest.class));
   }
+
 }
