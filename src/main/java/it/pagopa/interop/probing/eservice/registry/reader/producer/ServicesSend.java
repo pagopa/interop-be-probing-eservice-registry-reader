@@ -28,7 +28,7 @@ public class ServicesSend {
 
   public void sendMessage(EserviceDTO service) throws IOException {
     SendMessageRequest sendMessageRequest = new SendMessageRequest().withQueueUrl(sqsUrlServices)
-        // .withMessageGroupId(ProjectConstants.SQS_GROUP_ID)
+        .withMessageGroupId(ProjectConstants.SQS_GROUP_ID)
         .withMessageBody(mapper.writeValueAsString(service));
     sqs.sendMessage(sendMessageRequest);
     logger.logMessagePushedToQueue(service.getEserviceId(), service.getVersionId(),
