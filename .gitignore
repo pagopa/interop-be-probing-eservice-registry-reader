@@ -31,3 +31,36 @@ build/
 
 ### VS Code ###
 .vscode/
+bin/.gitignore
+bin/CODEOWNERS
+bin/Dockerfile
+bin/pom.xml
+bin/README.md
+bin/.github/workflows/build.yaml
+bin/src/main/java/it/pagopa/interop/probing/eservice/registry/reader/InteropProbingApplication.class
+bin/src/main/java/it/pagopa/interop/probing/eservice/registry/reader/annotations/ValidateStringArraySize.class
+bin/src/main/java/it/pagopa/interop/probing/eservice/registry/reader/annotations/validator/StringArrayValidator.class
+bin/src/main/java/it/pagopa/interop/probing/eservice/registry/reader/config/PropertiesLoader.class
+bin/src/main/java/it/pagopa/interop/probing/eservice/registry/reader/config/aws/s3/BucketConfig.class
+bin/src/main/java/it/pagopa/interop/probing/eservice/registry/reader/config/aws/sqs/SqsConfig.class
+bin/src/main/java/it/pagopa/interop/probing/eservice/registry/reader/config/mapping/BeanDeserializerModifierWithValidation.class
+bin/src/main/java/it/pagopa/interop/probing/eservice/registry/reader/config/mapping/BeanDeserializerWithValidation.class
+bin/src/main/java/it/pagopa/interop/probing/eservice/registry/reader/config/mapping/mapper/JacksonMapperConfig.class
+bin/src/main/java/it/pagopa/interop/probing/eservice/registry/reader/dto/Dto.class
+bin/src/main/java/it/pagopa/interop/probing/eservice/registry/reader/dto/impl/EserviceDTO$EserviceDTOBuilder.class
+bin/src/main/java/it/pagopa/interop/probing/eservice/registry/reader/dto/impl/EserviceDTO.class
+bin/src/main/java/it/pagopa/interop/probing/eservice/registry/reader/producer/ServicesSend.class
+bin/src/main/java/it/pagopa/interop/probing/eservice/registry/reader/service/BucketService.class
+bin/src/main/java/it/pagopa/interop/probing/eservice/registry/reader/util/EserviceState.class
+bin/src/main/java/it/pagopa/interop/probing/eservice/registry/reader/util/EserviceTechnology.class
+bin/src/main/java/it/pagopa/interop/probing/eservice/registry/reader/util/ProjectConstants.class
+bin/src/main/java/it/pagopa/interop/probing/eservice/registry/reader/util/logging/Logger.class
+bin/src/main/java/it/pagopa/interop/probing/eservice/registry/reader/util/logging/LoggerLayout.class
+bin/src/main/java/it/pagopa/interop/probing/eservice/registry/reader/util/logging/impl/LoggerImpl.class
+bin/src/main/resources/application.conf
+bin/src/main/resources/logback.xml
+bin/src/test/java/it/pagopa/interop/probing/eservice/registry/reader/unit/config/jacksonmapper/JacksonMapperConfigTest.class
+bin/src/test/java/it/pagopa/interop/probing/eservice/registry/reader/unit/dto/EserviceDTOTest.class
+bin/src/test/java/it/pagopa/interop/probing/eservice/registry/reader/unit/producer/ServicesSendTest.class
+bin/src/test/java/it/pagopa/interop/probing/eservice/registry/reader/unit/service/BucketServiceTest.class
+bin/src/test/resources/application.conf
