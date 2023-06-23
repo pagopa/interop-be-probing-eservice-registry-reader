@@ -21,13 +21,15 @@ public class InteropProbingApplication {
         new PropertiesLoader(), new SqsConfig(), new BucketConfig());
     BucketService bucketService = injector.getInstance(BucketService.class);
     ServicesSend servicesSend = injector.getInstance(ServicesSend.class);
-    AWSXRay.beginSegment(ProjectConstants.APPLICATION_NAME);
+
     List<EserviceDTO> services = bucketService.readObject();
     for (EserviceDTO eservice : services) {
+      AWSXRay.beginSegment(ProjectConstants.APPLICATION_NAME);
       servicesSend.sendMessage(eservice, AWSXRay.getCurrentSegment().getTraceId().toString());
       System.out.println("trace_id : " + AWSXRay.getCurrentSegment().getTraceId().toString());
+      AWSXRay.endSegment();
     }
-    AWSXRay.endSegment();
+
   }
 
 }
