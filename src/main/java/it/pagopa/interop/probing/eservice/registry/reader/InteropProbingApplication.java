@@ -25,8 +25,7 @@ public class InteropProbingApplication {
     List<EserviceDTO> services = bucketService.readObject();
     for (EserviceDTO eservice : services) {
       AWSXRay.beginSegment(ProjectConstants.APPLICATION_NAME);
-      servicesSend.sendMessage(eservice, AWSXRay.getCurrentSegment().getTraceId().toString());
-      System.out.println("trace_id : " + AWSXRay.getCurrentSegment().getTraceId().toString());
+      servicesSend.sendMessage(eservice);
       AWSXRay.endSegment();
     }
 

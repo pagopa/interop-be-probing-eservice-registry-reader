@@ -26,8 +26,7 @@ public class ServicesSend {
   @Named("amazon.sqs.endpoint.services-queue")
   private String sqsUrlServices;
 
-  public void sendMessage(EserviceDTO service, String token) throws IOException {
-
+  public void sendMessage(EserviceDTO service) throws IOException {
     SendMessageRequest sendMessageRequest = new SendMessageRequest().withQueueUrl(sqsUrlServices)
         .withMessageGroupId(ProjectConstants.SQS_GROUP_ID)
         .withMessageBody(mapper.writeValueAsString(service));
