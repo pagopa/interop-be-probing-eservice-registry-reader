@@ -2,9 +2,7 @@ package it.pagopa.interop.probing.eservice.registry.reader.util.logging;
 
 import java.sql.Timestamp;
 import java.util.UUID;
-
 import org.slf4j.MDC;
-
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.LayoutBase;
 import it.pagopa.interop.probing.eservice.registry.reader.util.ProjectConstants;
