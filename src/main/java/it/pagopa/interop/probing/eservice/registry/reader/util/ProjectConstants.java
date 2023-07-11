@@ -6,7 +6,6 @@ public class ProjectConstants {
     super();
   }
 
-  public static final String TRACE_ID_PLACEHOLDER = "trace_id";
   public static final String SQS_GROUP_ID = "services-group";
   public static final String TRACE_ID_XRAY_PLACEHOLDER = "AWS-XRAY-TRACE-ID";
   public static final String TRACE_ID_XRAY_MDC_PREFIX = "- [TRACE_ID= ";
