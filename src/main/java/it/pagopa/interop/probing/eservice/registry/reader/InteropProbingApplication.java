@@ -1,5 +1,7 @@
 package it.pagopa.interop.probing.eservice.registry.reader;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 import com.amazonaws.xray.AWSXRay;
 import com.google.inject.Guice;
@@ -13,10 +15,13 @@ import it.pagopa.interop.probing.eservice.registry.reader.dto.impl.EserviceDTO;
 import it.pagopa.interop.probing.eservice.registry.reader.producer.ServicesSend;
 import it.pagopa.interop.probing.eservice.registry.reader.service.BucketService;
 import it.pagopa.interop.probing.eservice.registry.reader.util.ProjectConstants;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class InteropProbingApplication {
 
   public static void main(String[] args) throws Exception {
+    log.info("Eservice-Registry-Reader started at: {}", LocalDateTime.now(ZoneOffset.UTC));
     Injector injector = Guice.createInjector(new BaseModule(), new JacksonMapperConfig(),
         new PropertiesLoader(), new SqsConfig(), new BucketConfig());
     BucketService bucketService = injector.getInstance(BucketService.class);
@@ -28,7 +33,7 @@ public class InteropProbingApplication {
       servicesSend.sendMessage(eservice);
       AWSXRay.endSegment();
     }
-
+    log.info("Eservice-Registry-Reader ended at: {}", LocalDateTime.now(ZoneOffset.UTC));
   }
 
 }
