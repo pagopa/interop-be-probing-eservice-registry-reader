@@ -11,6 +11,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 import it.pagopa.interop.probing.eservice.registry.reader.dto.impl.EserviceDTO;
+import it.pagopa.interop.probing.eservice.registry.reader.util.logging.Logger;
 
 @Singleton
 public class BucketService {
@@ -29,9 +30,16 @@ public class BucketService {
   @Inject
   private ObjectMapper mapper;
 
+  @Inject
+  private Logger logger;
+
   public List<EserviceDTO> readObject() throws IOException {
+    logger.logS3BucketRead(bucketName, bucketKey);
     S3Object s3Object = s3Client.getObject(new GetObjectRequest(bucketName, bucketKey));
-    return mapper.readValue(s3Object.getObjectContent(), new TypeReference<List<EserviceDTO>>() {});
+    List<EserviceDTO> services =
+        mapper.readValue(s3Object.getObjectContent(), new TypeReference<List<EserviceDTO>>() {});
+    logger.logNumberEserviceRetrieved(services.size());
+    return services;
   }
 
 }
