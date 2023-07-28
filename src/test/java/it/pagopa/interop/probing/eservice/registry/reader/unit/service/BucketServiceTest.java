@@ -28,6 +28,7 @@ import it.pagopa.interop.probing.eservice.registry.reader.dto.impl.EserviceDTO;
 import it.pagopa.interop.probing.eservice.registry.reader.service.BucketService;
 import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceState;
 import it.pagopa.interop.probing.eservice.registry.reader.util.EserviceTechnology;
+import it.pagopa.interop.probing.eservice.registry.reader.util.logging.Logger;
 
 @ExtendWith(MockitoExtension.class)
 class BucketServiceTest {
@@ -36,6 +37,8 @@ class BucketServiceTest {
   private ObjectMapper mapperMock = mock(ObjectMapper.class);
 
   private AmazonS3 s3Client = mock(AmazonS3.class);
+
+  private Logger loggerMock = mock(Logger.class);
 
   private List<EserviceDTO> listEservices;
 
@@ -55,6 +58,7 @@ class BucketServiceTest {
         bind(AmazonS3.class).toInstance(s3Client);
         bind(ObjectMapper.class).toInstance(mapperMock);
         bind(BucketService.class);
+        bind(Logger.class).toInstance(loggerMock);
         bind(String.class).annotatedWith(Names.named("amazon.bucketS3.name"))
             .toInstance("mocked-name");
         bind(String.class).annotatedWith(Names.named("amazon.bucketS3.key"))

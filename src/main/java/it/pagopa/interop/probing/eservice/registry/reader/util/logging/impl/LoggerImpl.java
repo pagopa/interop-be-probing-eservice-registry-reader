@@ -17,4 +17,15 @@ public class LoggerImpl implements Logger {
         AWSXRay.getCurrentSegment().getTraceId().toString(), eserviceId, versionId,
         queueUrl.toString(), queueGroupId);
   }
+
+  @Override
+  public void logS3BucketRead(String bucketName, String bucketKey) {
+    log.info("Reading from S3 bucket. bucketName={}, bucketKey={}", bucketName, bucketKey);
+  }
+
+  @Override
+  public void logNumberEserviceRetrieved(Integer numberEservicesRetrieved) {
+    log.info("Number of Eservices retrieved: {}", numberEservicesRetrieved);
+  }
+
 }
