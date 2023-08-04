@@ -20,6 +20,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class InteropProbingApplication {
 
+  static {
+    System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
+  }
+
   public static void main(String[] args) throws Exception {
     log.info("Eservice-Registry-Reader started at: {}", LocalDateTime.now(ZoneOffset.UTC));
     Injector injector = Guice.createInjector(new BaseModule(), new JacksonMapperConfig(),
